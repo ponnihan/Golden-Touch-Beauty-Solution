@@ -504,7 +504,7 @@ function PageHeading({ eyebrow, title, subtitle }) {
 
 function Footer({ settings }) {
   const phone = settings.contact_phone || DEFAULT_SETTINGS.contact_phone
-  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-brand-logo" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
+  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-brand-logo" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div><div><b>Visit our parlour</b><span className="gt-footer-address">Bankra, Jhingergacha, Jashore, Bangladesh</span><a href="https://www.google.com/maps/search/?api=1&query=X3HC%2B3C%20Bankra%2C%20Jhingergacha%2C%20Jashore%2C%20Bangladesh" target="_blank" rel="noreferrer">Get directions <ArrowRight size={14} /></a></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
 }
 
 function NotFound() {
@@ -593,3 +593,5 @@ const APP_STYLES = `
 `
 
 export default App
+
+.gt-footer-address{font-size:11px;color:#bcb0a4;line-height:1.7;max-width:220px}
