@@ -1,0 +1,59 @@
+GOLDEN TOUCH — COMPLETE FRONTEND REPLACEMENT PACKAGE
+===================================================
+
+গুরুত্বপূর্ণ: আপনার GitHub-এর main branch-এ বর্তমান Vite project folder-এর নাম
+`golden-touch 2`। এই ZIP সেই exact path অনুযায়ী সাজানো হয়েছে।
+
+ZIP-এর ভেতরের structure:
+
+  .github/workflows/static.yml
+  golden-touch 2/index.html
+  golden-touch 2/package.json
+  golden-touch 2/vite.config.js
+  golden-touch 2/src/App.jsx
+  golden-touch 2/src/main.jsx
+  golden-touch 2/src/supabase.js
+  golden-touch 2/src/style.css
+  supabase/functions/checkout/index.ts
+
+GitHub-এ একই relative path-এ ফাইলগুলো Upload/Replace করবেন। ZIP-কে সরাসরি
+একটি ফাইল হিসেবে Repository-তে upload করলে সাইট তৈরি হবে না। ZIP আগে Mac-এ
+Extract করুন, তারপর ফাইলগুলো তাদের একই path-এ বসান।
+
+GitHub Repository → Settings → Secrets and variables → Actions → Variables-এ
+এই exact নামগুলো থাকতে হবে:
+  VITE_SUPABASE_URL
+  VITE_SUPABASE_ANON_KEY
+  VITE_ADMIN_EMAIL
+
+Values:
+  VITE_SUPABASE_URL=https://loyzzvrflfhndfnnppgf.supabase.co
+  VITE_SUPABASE_ANON_KEY=Supabase Publishable Key (sb_publishable_...)
+  VITE_ADMIN_EMAIL=ponni171196@gmail.com
+
+কোনো Service Role/Secret key frontend-এ দেবেন না।
+
+Supabase backend-এর বর্তমান অবস্থা যাচাই করে পাওয়া:
+- checkout Edge Function ACTIVE (version 2), verify_jwt enabled
+- public.place_order RPC exists
+- public.track_guest_order RPC exists
+- orders, products এবং order_items RLS enabled
+
+এই প্যাকেজে checkout function-এর বর্তমানে deployed source-এর copy রাখা হয়েছে।
+শুধু file copy করে Supabase-এ deploy করবেন না; function ইতিমধ্যে ACTIVE।
+এখানে database-এর SQL পুনরায় চালানোও প্রয়োজন নেই।
+
+Guest checkout চালাতে Supabase Auth → Providers → Anonymous Sign-ins Enable
+থাকতে হবে। এটি dashboard থেকে নিশ্চিত করুন।
+
+GitHub Actions → Deploy Golden Touch (Vite) workflow-তে build ও deploy সফল হলে
+site URL:
+https://ponnihan.github.io/Golden-Touch-Beauty-Solution/
+
+Admin URL:
+https://ponnihan.github.io/Golden-Touch-Beauty-Solution/admin
+
+কাজের সীমা:
+- এই ZIP তৈরি হয়েছে, কিন্তু আপনার GitHub repository-তে commit/publish করা হয়নি।
+- bKash/Nagad বর্তমানে manual reference collection; automated payment gateway নয়।
+- Public website ও checkout চালাতে Supabase project variables ও anonymous sign-in enabled থাকতে হবে।
