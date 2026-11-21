@@ -1,10 +1,11 @@
-
-name: Deploy Golden Touch Website
+name: Deploy Golden Touch (Vite)
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
+    paths:
+      - 'golden-touch 2/**'
+      - '.github/workflows/static.yml'
   workflow_dispatch:
 
 permissions:
@@ -13,49 +14,54 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: github-pages
+  cancel-in-progress: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: 'golden-touch 2'
+    env:
+      VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+      VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+      VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Node
+      - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
+          cache: npm
+          cache-dependency-path: 'golden-touch 2/package.json'
 
       - name: Install dependencies
-        working-directory: "golden-touch 2"
         run: npm install
 
-      - name: Build website
-        working-directory: "golden-touch 2"
-        env:
-          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
-          VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
-        run: |
-          npm run build
-          cp dist/index.html dist/404.html
+      - name: Build Vite app
+        run: npm run build
 
-      - name: Setup Pages
+      - name: Add GitHub Pages SPA fallback
+        run: cp dist/index.html dist/404.html
+
+      - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "golden-touch 2/dist"
+          path: 'golden-touch 2/dist'
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
-      - name: Deploy
+      - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
