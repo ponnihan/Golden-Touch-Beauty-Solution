@@ -136,8 +136,12 @@ function App() {
           <NavLink to="/offers" onClick={() => setMobileMenu(false)}>Offers</NavLink>
           <NavLink to="/brands" onClick={() => setMobileMenu(false)}>Brands</NavLink>
           <NavLink to="/journal" onClick={() => setMobileMenu(false)}>Beauty Journal</NavLink>
-          <a href={`${import.meta.env.BASE_URL}#shop`} onClick={() => setMobileMenu(false)}>Shop</a>
-          <a href={`${import.meta.env.BASE_URL}#our-parlour`} onClick={() => setMobileMenu(false)}>Our Parlour</a>
+          <details className="gt-mega-wrap"><summary>{tx("Shop","শপ")} <ChevronRight size={13}/></summary><div className="gt-mega-menu">
+            <div><b>{tx("SHOP BY CATEGORY","ক্যাটাগরি অনুযায়ী")}</b><Link to="/categories/skincare">{tx("Skincare","ত্বকের যত্ন")}</Link><Link to="/categories/makeup">{tx("Makeup","মেকআপ")}</Link><Link to="/categories/hair-care">{tx("Hair Care","চুলের যত্ন")}</Link><Link to="/categories/body-care">{tx("Body Care","শরীরের যত্ন")}</Link><Link to="/categories/lip-care">{tx("Lip Care","ঠোঁটের যত্ন")}</Link></div>
+            <div><b>{tx("DISCOVER","আরও দেখুন")}</b><Link to="/offers">{tx("Offers & Bundles","অফার ও কম্বো")}</Link><Link to="/brands">{tx("Shop by Brand","ব্র্যান্ড")}</Link><Link to="/journal">{tx("Beauty Journal","বিউটি জার্নাল")}</Link><a href="#solutions">{tx("Beauty Concerns","ত্বকের সমস্যা")}</a></div>
+            <div className="gt-mega-feature"><span>{tx("GOLDEN TOUCH PARLOUR","গোল্ডেন টাচ পার্লার")}</span><b>{tx("Beauty care, with a personal touch.","আপনার জন্য যত্নশীল সৌন্দর্যসেবা।")}</b><a href="#our-parlour">{tx("Explore & contact","দেখুন ও যোগাযোগ করুন")} <ArrowRight size={14}/></a><small>01990941408</small></div>
+          </div></details>
+          <a href={`${import.meta.env.BASE_URL}#our-parlour`} onClick={() => setMobileMenu(false)}>{tx("Our Parlour","আমাদের পার্লার")}</a>
           <NavLink to="/track" onClick={() => setMobileMenu(false)}>Track order</NavLink>
           <NavLink to="/account" onClick={() => setMobileMenu(false)}>Account</NavLink>
         </nav>
@@ -628,6 +632,10 @@ const APP_STYLES = `
 
 .gt-language-toggle{border:1px solid #d8c8b3;background:#fff;color:#5f472b;padding:9px 12px;font:700 11px 'DM Sans';cursor:pointer;white-space:nowrap}@media(max-width:760px){.gt-language-toggle{padding:7px 9px}}
 
+.gt-mega-wrap{position:relative;list-style:none}.gt-mega-wrap summary{display:flex;align-items:center;gap:5px;cursor:pointer;list-style:none;font:600 12px "DM Sans"}.gt-mega-wrap summary::-webkit-details-marker{display:none}
+.gt-mega-menu{position:absolute;z-index:40;top:34px;left:50%;transform:translateX(-35%);width:min(700px,88vw);padding:24px;background:#fffdf9;border:1px solid #e7ddcf;box-shadow:0 18px 45px #21170f20;display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:22px;color:#33271d}
+.gt-mega-menu>div{display:flex;flex-direction:column;align-items:flex-start;gap:12px}.gt-mega-menu b{font-size:10px;letter-spacing:.12em;color:#a17a48}.gt-mega-menu a{font-size:12px!important;color:#5e5145!important;text-decoration:none!important}.gt-mega-feature{background:#f2eadf;padding:17px}.gt-mega-feature span,.gt-mega-feature small{font-size:9px;color:#997344}.gt-mega-feature b{font:500 18px/1.4 "Playfair Display",serif!important;color:#32261c!important}.gt-mega-feature a{color:#8a6334!important;font-weight:700}
+@media(max-width:760px){.gt-mega-wrap{width:100%}.gt-mega-wrap summary{padding:10px 0}.gt-mega-menu{position:static;transform:none;width:100%;grid-template-columns:1fr 1fr;padding:15px;box-shadow:none;margin:6px 0 10px}.gt-mega-feature{grid-column:1/-1}}
 `
 
 export default App
