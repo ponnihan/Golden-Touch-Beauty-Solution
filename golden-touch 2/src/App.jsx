@@ -6,7 +6,7 @@ import {
 } from 'lucide-react'
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { supabase, ADMIN_EMAIL } from './supabase'
-import { GT_CATEGORIES, GT_CONCERNS, GT_JOURNAL, CategoryPage, ConcernPage, JournalPage, JournalArticle, BrandDirectory, OffersPage, DiscoveryStyles } from './Discovery'
+import { GT_CATEGORIES, GT_CONCERNS, GT_JOURNAL, CategoryPage, ConcernPage, JournalPage, JournalArticle, BrandDirectory, OffersPage, ProductPage, DiscoveryStyles } from './Discovery'
 
 const DEFAULT_SETTINGS = {
   store_name: 'Golden Touch',
@@ -153,6 +153,7 @@ function App() {
           <Route path="/orders" element={<Orders session={session} authReady={authReady} />} />
           <Route path="/track" element={<TrackOrder />} />
           <Route path="/categories/:slug" element={<><DiscoveryStyles /><CategoryPage products={products} addToCart={addToCart} /></>} />
+          <Route path="/product/:id" element={<><DiscoveryStyles /><ProductPage products={products} addToCart={addToCart} /></>} />
           <Route path="/solutions/:slug" element={<><DiscoveryStyles /><ConcernPage products={products} addToCart={addToCart} /></>} />
           <Route path="/journal" element={<><DiscoveryStyles /><JournalPage products={products} addToCart={addToCart} /></>} />
           <Route path="/journal/:slug" element={<><DiscoveryStyles /><JournalArticle products={products} addToCart={addToCart} /></>} />
