@@ -200,7 +200,8 @@ function Home({ products, loading, addToCart, settings, language }) {
           <div className="gt-eyebrow"><Sparkles size={15} /> {slides[slide].eyebrow}</div>
           <h1>{slides[slide].title}</h1>
           <p>{slides[slide].copy}</p>
-          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href={slides[slide].parlour ? '#our-parlour' : '#shop'}>{tx('Explore our parlour','পার্লার সেবা দেখুন')} <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href={slides[slide].parlour ? 'tel:01990941408' : '#why-us'}>{tx('Call our parlour','পার্লারে কল করুন')}</a></div>
+          <div className="gt-parlour-location"><MapPin size={22}/><span><b>{tx('Visit our parlour','আমাদের পার্লারে আসুন')}</b><small>{tx('Bakra Bazar, Jhikargachha, Jashore','বাকড়া বাজার, ঝিকরগাছা, যশোর')}</small></span></div>
+          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="https://www.google.com/maps/search/?api=1&query=Bakra+Bazar+Jhikargachha+Jashore+Bangladesh" target="_blank" rel="noreferrer">{tx('Get directions','লোকেশন দেখুন')} <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="tel:01990941408"><Phone size={15}/> {tx('Call 01990941408','কল করুন ০১৯৯০৯৪১৪০৮')}</a></div>
           <div className="gt-hero-promise"><ShieldCheck size={17} /> {tx('Easy ordering','সহজ অর্ডার')} <span>·</span> {tx('Cash on delivery available','ক্যাশ অন ডেলিভারি সুবিধা')}</div>
           <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
         </div>
