@@ -160,18 +160,21 @@ function App() {
 
 function Home({ products, loading, addToCart, settings }) {
   const [activeCategory, setActiveCategory] = useState('All')
+  const [activeConcern, setActiveConcern] = useState('')
   const [slide, setSlide] = useState(0)
   const categories = useMemo(() => ['All', ...new Set(products.map((item) => item.category).filter(Boolean))], [products])
   const slides = [
     { eyebrow: 'YOUR BEAUTY, YOUR MOMENT', title: <>Feel beautiful.<br /><em>Every day.</em></>, copy: 'Thoughtfully selected beauty essentials and professional care from Golden Touch.' },
     { eyebrow: 'CARE THAT FEELS PERSONAL', title: <>A little care.<br /><em>A brighter you.</em></>, copy: 'Discover beauty favourites and make time for the care you deserve.' },
     { eyebrow: 'WELCOME TO GOLDEN TOUCH', title: <>Your glow.<br /><em>Your confidence.</em></>, copy: 'Shop with ease, enjoy guest checkout and get friendly local support.' },
+    { eyebrow: 'GOLDEN TOUCH · LADIES BEAUTY PARLOUR', title: <>A moment for<br /><em>yourself.</em></>, copy: 'Professional beauty care in a welcoming space at Bakra Bazar, Jhikargacha, Jashore.', parlour: true },
   ]
   useEffect(() => {
     const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 6500)
     return () => window.clearInterval(timer)
   }, [])
-  const visibleProducts = activeCategory === 'All' ? products : products.filter((item) => item.category === activeCategory)
+  const categoryProducts = activeCategory === 'All' ? products : products.filter((item) => item.category === activeCategory)
+  const visibleProducts = activeConcern ? categoryProducts.filter((item) => `${item.name || ''} ${item.category || ''} ${item.description || ''}`.toLowerCase().includes(activeConcern)) : categoryProducts
   return (
     <>
       <section className="gt-hero gt-hero-slider">
@@ -179,18 +182,33 @@ function Home({ products, loading, addToCart, settings }) {
           <div className="gt-eyebrow"><Sparkles size={15} /> {slides[slide].eyebrow}</div>
           <h1>{slides[slide].title}</h1>
           <p>{slides[slide].copy}</p>
-          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="#shop">Explore collection <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="#why-us">Why Golden Touch</a></div>
+          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href={slides[slide].parlour ? '#our-parlour' : '#shop'}>{slides[slide].parlour ? 'Explore our parlour' : 'Explore collection'} <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href={slides[slide].parlour ? 'tel:01990941408' : '#why-us'}>{slides[slide].parlour ? 'Call our parlour' : 'Why Golden Touch'}</a></div>
           <div className="gt-hero-promise"><ShieldCheck size={17} /> Easy ordering <span>·</span> Cash on delivery available</div>
           <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
         </div>
-        <div className="gt-hero-art" aria-label="Golden Touch beauty collection illustration">
-          <div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div>
+        <div className={`gt-hero-art ${slides[slide].parlour ? 'gt-hero-parlour-art' : ''}`} aria-label={slides[slide].parlour ? 'Golden Touch beauty parlour' : 'Golden Touch beauty collection illustration'}>
+          {slides[slide].parlour ? <><img src={`${import.meta.env.BASE_URL}golden-touch-parlour.webp`} alt="Golden Touch beauty parlour interior" /><div className="gt-hero-parlour-caption"><Sparkles size={16} /> Golden Touch Beauty Parlour</div></> : <><div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div></>}
         </div>
       </section>
       <section className="gt-promise-row"><span><ShieldCheck /> Carefully selected products</span><span><Truck /> Delivery available</span><span><ShoppingBag /> Easy guest checkout</span><span><Phone /> Friendly support</span></section>
       <section className="gt-category-section" aria-label="Shop by category">
         <div className="gt-category-heading"><div><div className="gt-eyebrow">FIND YOUR FAVOURITES</div><h2>Shop by category</h2></div><a href="#shop">View collection <ArrowRight size={15} /></a></div>
         <div className="gt-category-scroller">{categories.map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => { setActiveCategory(category); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}>{category === 'All' ? 'All products' : category}<ChevronRight size={14} /></button>)}</div>
+      </section>
+      <section className="gt-skin-concerns" aria-label="Solutions by skin concern">
+        <div className="gt-concern-heading"><div><div className="gt-eyebrow">PERSONAL BEAUTY CARE</div><h2>Solutions by concern</h2><p>Choose what you would like help with and explore relevant beauty care.</p></div><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hello Golden Touch, I would like a skin assessment and skincare guidance.')}`} target="_blank" rel="noreferrer">Start skin assessment <ArrowRight size={16} /></a></div>
+        <div className="gt-concern-scroller">
+          {[
+            { name: 'Acne', term: 'acne', image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Oily skin', term: 'oily', image: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Dry skin', term: 'dry', image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Visible pores', term: 'pores', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Ageing', term: 'ageing', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Sun damage', term: 'sun', image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=600&q=85' },
+            { name: 'Pigmentation', term: 'pigmentation', image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=600&q=85' },
+          ].map((concern) => <button className="gt-concern-card" key={concern.term} onClick={() => { setActiveConcern(concern.term); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}><img src={concern.image} alt="" loading="lazy" /><span>{concern.name}</span></button>)}
+        </div>
+        {activeConcern && <div className="gt-concern-selection"><span>Showing products related to: <b>{activeConcern}</b></span><button onClick={() => setActiveConcern('')}>Clear selection <X size={13} /></button></div>}
       </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
       <section className="gt-section gt-section-products-top" id="shop">
@@ -601,6 +619,9 @@ const APP_STYLES = `
 /* Carnesia-inspired browsing features with original Golden Touch identity */
 .gt-hero-slider{position:relative}.gt-hero-copy{animation:gt-fade-in .45s ease}.gt-slider-controls{display:flex;gap:8px;margin-top:24px}.gt-slider-controls button{width:28px;height:4px;border:0;background:#c9bba9;padding:0;cursor:pointer}.gt-slider-controls button.active{width:48px;background:#9a713f}.gt-promise-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px clamp(20px,8vw,120px);border-bottom:1px solid var(--gt-line);background:#fff}.gt-promise-row span{display:flex;align-items:center;justify-content:center;gap:9px;color:#6e6257;font-size:11px}.gt-promise-row svg{width:18px;height:18px;color:#a77d48}.gt-category-section{padding:35px clamp(20px,8vw,120px) 26px;background:#faf8f4}.gt-category-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}.gt-category-heading h2{font:500 27px 'Playfair Display',serif;margin:8px 0 0}.gt-category-heading>a{display:flex;align-items:center;gap:6px;color:#8f6735;text-decoration:none;font-size:11px}.gt-category-scroller{display:flex;gap:10px;overflow-x:auto;padding:2px 1px 10px;scroll-snap-type:x mandatory}.gt-category-scroller button{flex:0 0 auto;display:flex;align-items:center;gap:9px;border:1px solid #e5dbce;background:white;padding:12px 17px;color:#65584d;font:600 11px 'DM Sans';cursor:pointer;scroll-snap-align:start;transition:.2s}.gt-category-scroller button.active,.gt-category-scroller button:hover{background:#29221c;border-color:#29221c;color:white}.gt-category-scroller button svg{width:13px}.gt-section-products-top{scroll-margin-top:105px}.gt-product-card{overflow:hidden}.gt-product-bottom button:hover:not(:disabled){background:#a77d48;border-color:#a77d48}.gt-header{backdrop-filter:blur(14px)}.gt-nav a{position:relative}.gt-nav a.active:after{content:'';position:absolute;left:0;right:0;bottom:-9px;height:2px;background:#b58a4d}@keyframes gt-fade-in{from{opacity:.35;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@media(max-width:760px){.gt-promise-row{grid-template-columns:repeat(2,1fr);padding:17px 14px;gap:14px}.gt-promise-row span{justify-content:flex-start;font-size:10px}.gt-category-section{padding:28px 17px 18px}.gt-category-heading h2{font-size:23px}.gt-category-scroller button{padding:11px 14px}.gt-hero-copy{animation:none}}
 
+
+/* Skin concern discovery + parlour hero slide */
+.gt-skin-concerns{padding:62px clamp(20px,8vw,120px) 54px;background:#fffdf9}.gt-concern-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:26px}.gt-concern-heading h2{font:500 clamp(29px,3vw,39px) 'Playfair Display',serif;margin:9px 0}.gt-concern-heading p{color:#776d64;font-size:13px;margin:0}.gt-concern-heading>a{display:flex;align-items:center;gap:9px;color:#7f5b2e;text-decoration:none;font-size:12px;white-space:nowrap}.gt-concern-scroller{display:flex;gap:17px;overflow-x:auto;padding:2px 1px 13px;scroll-snap-type:x mandatory;scrollbar-width:thin}.gt-concern-card{position:relative;flex:0 0 clamp(190px,15vw,245px);height:245px;padding:0;border:0;border-radius:22px;overflow:hidden;background:#eee5d9;cursor:pointer;scroll-snap-align:start;text-align:left}.gt-concern-card:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#17120fb8)}.gt-concern-card img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.gt-concern-card:hover img{transform:scale(1.06)}.gt-concern-card span{position:absolute;z-index:1;left:15px;bottom:15px;background:#fffdf8;color:#171513;padding:9px 15px;border-radius:22px;font:600 13px 'DM Sans'}.gt-concern-selection{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:#776d64;font-size:11px}.gt-concern-selection button{display:flex;align-items:center;gap:5px;border:0;background:none;color:#8b673c;cursor:pointer;font:600 11px 'DM Sans'}.gt-hero-parlour-art{position:relative!important;padding:0!important;display:block!important;background:#211c18!important}.gt-hero-parlour-art>img{width:100%;height:100%;object-fit:cover;display:block}.gt-hero-parlour-art:after{content:'';position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#17120f99)}.gt-hero-parlour-caption{position:absolute;z-index:1;left:22px;bottom:20px;color:#fff;display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.gt-parlour-details{scroll-margin-top:90px}@media(max-width:760px){.gt-skin-concerns{padding:45px 17px 38px}.gt-concern-heading{align-items:flex-start;flex-direction:column;gap:14px}.gt-concern-heading h2{font-size:28px}.gt-concern-card{flex-basis:190px;height:215px}.gt-hero-parlour-art{height:260px!important}.gt-concern-selection{align-items:flex-start;gap:10px;flex-direction:column}}
 `
 
 export default App
