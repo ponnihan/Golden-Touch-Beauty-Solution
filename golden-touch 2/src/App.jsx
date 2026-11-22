@@ -177,7 +177,8 @@ function App() {
   )
 }
 
-function Home({ products, loading, addToCart, settings, language }) {\n  const tx = (en, bn) => language === "bn" ? bn : en
+function Home({ products, loading, addToCart, settings, language }) {
+  const tx = (en, bn) => language === "bn" ? bn : en
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeConcern, setActiveConcern] = useState('')
   const [slide, setSlide] = useState(0)
