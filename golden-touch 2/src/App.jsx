@@ -179,7 +179,7 @@ function Home({ products, loading, addToCart, settings }) {
     { eyebrow: 'YOUR BEAUTY, YOUR MOMENT', title: <>Feel beautiful.<br /><em>Every day.</em></>, copy: 'Thoughtfully selected beauty essentials and professional care from Golden Touch.' },
     { eyebrow: 'CARE THAT FEELS PERSONAL', title: <>A little care.<br /><em>A brighter you.</em></>, copy: 'Discover beauty favourites and make time for the care you deserve.' },
     { eyebrow: 'WELCOME TO GOLDEN TOUCH', title: <>Your glow.<br /><em>Your confidence.</em></>, copy: 'Shop with ease, enjoy guest checkout and get friendly local support.' },
-    { eyebrow: 'GOLDEN TOUCH · LADIES BEAUTY PARLOUR', title: <>A moment for<br /><em>yourself.</em></>, copy: 'Professional beauty care in a welcoming space at Bakra Bazar, Jhikargacha, Jashore.', parlour: true },
+    { eyebrow: 'GOLDEN TOUCH · LADIES BEAUTY PARLOUR', title: <>Where beauty meets<br /><em>confidence.</em></>, copy: 'সৌন্দর্য আপনার, আমাদের প্রতিশ্রুতি। আপনার সৌন্দর্য ও যত্নে Golden Touch সবসময় পাশে।', parlour: true },
   ]
   useEffect(() => {
     const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 6500)
@@ -198,9 +198,10 @@ function Home({ products, loading, addToCart, settings }) {
           <div className="gt-hero-promise"><ShieldCheck size={17} /> Easy ordering <span>·</span> Cash on delivery available</div>
           <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
         </div>
-        <div className={`gt-hero-art ${slides[slide].parlour ? 'gt-hero-parlour-art' : ''}`} aria-label={slides[slide].parlour ? 'Golden Touch beauty parlour' : 'Golden Touch beauty collection illustration'}>
-          {slides[slide].parlour ? <><img src={`${import.meta.env.BASE_URL}golden-touch-parlour.webp`} alt="Golden Touch beauty parlour interior" /><div className="gt-hero-parlour-caption"><Sparkles size={16} /> Golden Touch Beauty Parlour</div></> : <><div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div></>}
-        </div>
+        {slides[slide].parlour ? <div className="gt-hero-services" id="our-parlour">
+          <div className="gt-eyebrow">OUR PARLOUR SERVICES</div><h2>আমাদের সেবা সমূহ</h2>
+          <ul><li>পারফেক্টলি ব্লেন্ডেড স্মোকি আইস</li><li>ওয়াটারপ্রুফ ও লং-লাস্টিং মেকআপ</li><li>হাই কোয়ালিটি প্রোডাক্ট ব্যবহার</li><li>আপনার মুখের সাথে মানানসই লুক</li><li>হেয়ার কাট, কালার ও স্টাইলিং</li><li>ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট</li><li>ওয়াক্সিং, থ্রেডিং ও ব্লিচ</li><li>হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও হেয়ার স্পা</li></ul>
+        </div> : <div className="gt-hero-art" aria-label="Golden Touch beauty collection illustration"><div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div></div>}
       </section>
       <section className="gt-promise-row"><span><ShieldCheck /> Carefully selected products</span><span><Truck /> Delivery available</span><span><ShoppingBag /> Easy guest checkout</span><span><Phone /> Friendly support</span></section>
       <section className="gt-category-section" aria-label="Shop by category">
@@ -218,24 +219,6 @@ function Home({ products, loading, addToCart, settings }) {
       <section className="gt-section gt-section-products-top" id="shop">
         <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>{activeCategory === 'All' ? 'Shop our favourites' : activeCategory}</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{visibleProducts.length} products</span></div>
         {loading ? <div className="gt-empty">Loading our collection...</div> : visibleProducts.length ? <div className="gt-product-grid">{visibleProducts.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available in this category yet.</div>}
-      </section>
-      <section className="gt-parlour" id="our-parlour" style={{ backgroundImage: `linear-gradient(90deg, rgba(25,20,17,.88), rgba(25,20,17,.72)), url("${import.meta.env.BASE_URL}golden-touch-parlour.webp")`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
-        <div className="gt-parlour-inner">
-          <div className="gt-parlour-copy">
-            <div className="gt-eyebrow">GOLDEN TOUCH · LADIES BEAUTY PARLOUR</div>
-            <h2>Where beauty meets <em>confidence.</em></h2>
-            <p>সৌন্দর্য আপনার, আমাদের প্রতিশ্রুতি। আপনার সৌন্দর্য ও যত্নে Golden Touch সবসময় পাশে।</p>
-            <div className="gt-parlour-location"><MapPin size={18} /><span><b>Visit our parlour</b><small>বাকড়া বাজার, ঝিকরগাছা, যশোর</small></span></div>
-            <a className="gt-button gt-button-gold" href={`tel:${String(settings.contact_phone || '').replace(/[^0-9+]/g, '')}`}><Phone size={16} /> Call 01990941408</a>
-          </div>
-          <div className="gt-parlour-services">
-            <div className="gt-eyebrow">OUR PARLOUR SERVICES</div>
-            <h3>আমাদের সেবা সমূহ</h3>
-            <ul>
-              <li>পারফেক্টলি ব্লেন্ডেড স্মোকি আইস</li><li>ওয়াটারপ্রুফ ও লং-লাস্টিং মেকআপ</li><li>হাই কোয়ালিটি প্রোডাক্ট ব্যবহার</li><li>আপনার মুখের সাথে মানানসই লুক</li><li>হেয়ার কাট, কালার ও স্টাইলিং</li><li>ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট</li><li>ওয়াক্সিং, থ্রেডিং ও ব্লিচ</li><li>হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও হেয়ার স্পা</li>
-            </ul>
-          </div>
-        </div>
       </section>
       <section className="gt-journal-teaser"><div><div className="gt-eyebrow">LEARN · CARE · GLOW</div><h2>Beauty knowledge, made simple</h2><p>Explore practical skincare, haircare and parlour guides.</p><Link className="gt-button gt-button-gold" to="/journal">Read the beauty journal <ArrowRight size={15}/></Link></div><div className="gt-journal-teaser-links">{GT_JOURNAL.slice(0,3).map((article)=><Link key={article.slug} to={'/journal/'+article.slug}><img src={article.image} alt={article.title}/><span>{article.title}</span><ArrowRight size={14}/></Link>)}</div></section>
       <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
@@ -627,6 +610,19 @@ const APP_STYLES = `
 
 /* Skin concern discovery + parlour hero slide */
 .gt-skin-concerns{padding:62px clamp(20px,8vw,120px) 54px;background:#fffdf9}.gt-concern-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;margin-bottom:26px}.gt-concern-heading h2{font:500 clamp(29px,3vw,39px) 'Playfair Display',serif;margin:9px 0}.gt-concern-heading p{color:#776d64;font-size:13px;margin:0}.gt-concern-heading>a{display:flex;align-items:center;gap:9px;color:#7f5b2e;text-decoration:none;font-size:12px;white-space:nowrap}.gt-concern-scroller{display:flex;gap:17px;overflow-x:auto;padding:2px 1px 13px;scroll-snap-type:x mandatory;scrollbar-width:thin}.gt-concern-card{position:relative;flex:0 0 clamp(190px,15vw,245px);height:245px;padding:0;border:0;border-radius:22px;overflow:hidden;background:#eee5d9;cursor:pointer;scroll-snap-align:start;text-align:left}.gt-concern-card:after{content:'';position:absolute;inset:35% 0 0;background:linear-gradient(transparent,#17120fb8)}.gt-concern-card img{width:100%;height:100%;object-fit:cover;transition:transform .35s}.gt-concern-card:hover img{transform:scale(1.06)}.gt-concern-card span{position:absolute;z-index:1;left:15px;bottom:15px;background:#fffdf8;color:#171513;padding:9px 15px;border-radius:22px;font:600 13px 'DM Sans'}.gt-concern-selection{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:#776d64;font-size:11px}.gt-concern-selection button{display:flex;align-items:center;gap:5px;border:0;background:none;color:#8b673c;cursor:pointer;font:600 11px 'DM Sans'}.gt-hero-parlour-art{position:relative!important;padding:0!important;display:block!important;background:#211c18!important}.gt-hero-parlour-art>img{width:100%;height:100%;object-fit:cover;display:block}.gt-hero-parlour-art:after{content:'';position:absolute;inset:45% 0 0;background:linear-gradient(transparent,#17120f99)}.gt-hero-parlour-caption{position:absolute;z-index:1;left:22px;bottom:20px;color:#fff;display:flex;align-items:center;gap:9px;font-size:12px;letter-spacing:.08em;text-transform:uppercase}.gt-parlour-details{scroll-margin-top:90px}@media(max-width:760px){.gt-skin-concerns{padding:45px 17px 38px}.gt-concern-heading{align-items:flex-start;flex-direction:column;gap:14px}.gt-concern-heading h2{font-size:28px}.gt-concern-card{flex-basis:190px;height:215px}.gt-hero-parlour-art{height:260px!important}.gt-concern-selection{align-items:flex-start;gap:10px;flex-direction:column}}
+
+/* Parlour services are now part of the hero slide */
+.gt-hero-services{position:relative;padding:30px 34px;border:1px solid #b58a4d88;background:linear-gradient(135deg,#211b18ed,#40332be8),url('${import.meta.env.BASE_URL}golden-touch-parlour.webp') center/cover;color:#f7eee2;box-shadow:0 20px 50px #160f0b24}
+.gt-hero-services>.gt-eyebrow{color:#d8b276}.gt-hero-services h2{font-family:'Noto Sans Bengali','Hind Siliguri',sans-serif;color:#e3bd83;font-size:clamp(25px,2.5vw,36px);font-weight:700;margin:17px 0 20px}
+.gt-hero-services ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;column-gap:28px}
+.gt-hero-services li{position:relative;padding:13px 0 13px 22px;border-bottom:1px solid #ffffff25;color:#e9dfd3;font-size:clamp(11px,.95vw,14px);line-height:1.6}
+.gt-hero-services li:before{content:'✦';position:absolute;left:0;color:#d8b276}
+.gt-hero:has(.gt-hero-services){background:linear-gradient(110deg,#211b18 0%,#30251f 100%);color:#f8f0e7;min-height:520px}
+.gt-hero:has(.gt-hero-services) .gt-hero-copy>p,.gt-hero:has(.gt-hero-services) .gt-hero-promise{color:#d7c9b9}
+.gt-hero:has(.gt-hero-services) .gt-hero-copy .gt-eyebrow{color:#d8b276}
+.gt-hero:has(.gt-hero-services) .gt-hero-actions .gt-button-outline{color:#f3e7d8;border-color:#b58a4d}
+@media(max-width:760px){.gt-hero:has(.gt-hero-services){padding:38px 18px;gap:24px}.gt-hero-services{padding:22px 18px}.gt-hero-services ul{grid-template-columns:1fr 1fr;column-gap:14px}.gt-hero-services li{font-size:10px;padding:10px 0 10px 17px}.gt-hero-services h2{font-size:25px}}
+
 `
 
 export default App
