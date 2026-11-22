@@ -66,7 +66,7 @@ function useSEO(title, description, path, type='website') {
 function ProductRecommendations({products=[], related=[], addToCart}) {
   const sellable = products.filter(p => Number(p.price)>0 && Number(p.stock)>0 && p.image_url)
   const matched = sellable.filter(p => related.length===0 || related.some(term => (p.name+' '+p.category+' '+(p.description||'')).toLowerCase().includes(term.toLowerCase())))
-  const matches = matched.length ? matched : sellable)
+  const matches = matched.length ? matched : sellable
   return <section className="gt-editorial-products"><div className="gt-eyebrow">{matched.length ? 'SHOP RELATED PRODUCTS' : 'CURRENTLY AVAILABLE'}</div><h2>{matched.length ? 'Products for your routine' : 'Available from Golden Touch'}</h2>{matches.length ? <div className="gt-product-grid">{matches.map(p=><article className="gt-product-card" key={p.id}><div className="gt-product-image"><img src={p.image_url} alt={p.name}/></div><div className="gt-product-details"><h3>{p.name}</h3><ul><li>{p.category||'Beauty care'}</li><li>In stock and available to order</li><li>Follow the product label for directions</li></ul><div className="gt-product-bottom"><strong>৳{Number(p.price).toLocaleString('en-BD')}</strong>{addToCart&&<button onClick={()=>addToCart(p)}><ShoppingBag size={14}/> Add</button>}</div></div></article>)}</div> : <div className="gt-editorial-empty"><p>We are preparing this collection. Contact Golden Touch to confirm current availability, product images and pricing.</p><a href={WA+encodeURIComponent('Hello Golden Touch, please recommend available products for my routine.')}>Ask about available products <ArrowRight size={15}/></a></div>}</section>
 }
 
