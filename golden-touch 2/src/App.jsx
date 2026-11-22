@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useState } from 'react'
 import {
   ArrowRight, CheckCircle2, ChevronRight, CircleUserRound, ClipboardList,
   Heart, LayoutDashboard, LogOut, Menu, Minus, Package, Phone, Plus,
-  Search, ShieldCheck, ShoppingBag, Sparkles, Trash2, Truck, X,
+  Search, ShieldCheck, ShoppingBag, Sparkles, Trash2, Truck, X, MapPin,
 } from 'lucide-react'
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { supabase, ADMIN_EMAIL } from './supabase'
