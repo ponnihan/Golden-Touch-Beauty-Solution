@@ -41,10 +41,27 @@ jobs:
           VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
         run: npm run build
 
-      - name: Prepare SPA fallback
+      - name: Prepare direct routes for GitHub Pages
         run: |
-          test -f "golden-touch 2/dist/index.html"
-          cp "golden-touch 2/dist/index.html" "golden-touch 2/dist/404.html"
+          set -e
+          DIST="golden-touch 2/dist"
+          test -f "$DIST/index.html"
+          mkdir -p "$DIST/solutions" "$DIST/categories" "$DIST/journal" "$DIST/product"
+          for route in acne oily-skin dry-skin visible-pores pigmentation sun-damage dullness ageing hair-fall dandruff; do
+            mkdir -p "$DIST/solutions/$route"
+            cp "$DIST/index.html" "$DIST/solutions/$route/index.html"
+          done
+          for route in skincare cleanser toner serum moisturizer sunscreen makeup lip-care hair-care body-care face-mist essence; do
+            mkdir -p "$DIST/categories/$route"
+            cp "$DIST/index.html" "$DIST/categories/$route/index.html"
+          done
+          for route in build-a-simple-skincare-routine daily-sun-protection-guide care-for-dry-skin oily-skin-without-overwashing understanding-acne-prone-skin healthy-hair-care-habits makeup-prep-for-a-smooth-finish beauty-parlour-appointment-guide; do
+            mkdir -p "$DIST/journal/$route"
+            cp "$DIST/index.html" "$DIST/journal/$route/index.html"
+          done
+          mkdir -p "$DIST/product/6480fe53-e5d3-404b-8203-385741cd8020"
+          cp "$DIST/index.html" "$DIST/product/6480fe53-e5d3-404b-8203-385741cd8020/index.html"
+          cp "$DIST/index.html" "$DIST/404.html"
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
