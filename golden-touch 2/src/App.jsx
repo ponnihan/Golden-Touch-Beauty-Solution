@@ -70,7 +70,7 @@ function App() {
     try { return JSON.parse(localStorage.getItem('gt_cart') || '[]') } catch { return [] }
   })
   const [mobileMenu, setMobileMenu] = useState(false)
-  const [language, setLanguage] = useState(() => localStorage.getItem('gt_language') === 'bn' ? 'bn' : 'en')
+  const [language, setLanguage] = useState(() => localStorage.getItem('gt_language') === 'en' ? 'en' : 'bn')
   const tx = (en, bn) => language === 'bn' ? bn : en
   useEffect(() => { localStorage.setItem('gt_language', language); document.documentElement.lang = language }, [language])
 
