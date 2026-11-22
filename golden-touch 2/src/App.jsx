@@ -123,14 +123,14 @@ function App() {
       <div className="gt-announcement">Beauty, care & confidence — delivered to your door</div>
       <header className="gt-header">
         <Link to="/" className="gt-brand" onClick={() => setMobileMenu(false)}>
-          <img className="gt-logo-image" src="/golden-touch-logo.jpeg" alt="Golden Touch logo" />
+          <img className="gt-logo-image" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" />
           <span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span>
         </Link>
         <div className="gt-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search beauty products..." aria-label="Search products" /></div>
         <nav className={`gt-nav ${mobileMenu ? 'is-open' : ''}`}>
           <NavLink to="/" end onClick={() => setMobileMenu(false)}>Home</NavLink>
-          <a href="/#shop" onClick={() => setMobileMenu(false)}>Shop</a>
-          <a href="/#our-parlour" onClick={() => setMobileMenu(false)}>Our Parlour</a>
+          <a href={`${import.meta.env.BASE_URL}#shop`} onClick={() => setMobileMenu(false)}>Shop</a>
+          <a href={`${import.meta.env.BASE_URL}#our-parlour`} onClick={() => setMobileMenu(false)}>Our Parlour</a>
           <NavLink to="/track" onClick={() => setMobileMenu(false)}>Track order</NavLink>
           <NavLink to="/account" onClick={() => setMobileMenu(false)}>Account</NavLink>
         </nav>
@@ -540,7 +540,7 @@ function PageHeading({ eyebrow, title, subtitle }) {
 
 function Footer({ settings }) {
   const phone = settings.contact_phone || DEFAULT_SETTINGS.contact_phone
-  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-logo-image" src="/golden-touch-logo.jpeg" alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
+  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-logo-image" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
 }
 
 function NotFound() {
