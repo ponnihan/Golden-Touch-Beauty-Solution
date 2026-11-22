@@ -6,6 +6,7 @@ import {
 } from 'lucide-react'
 import { Link, NavLink, Route, Routes, useNavigate } from 'react-router-dom'
 import { supabase, ADMIN_EMAIL } from './supabase'
+import { GT_CATEGORIES, GT_CONCERNS, GT_JOURNAL, CategoryPage, ConcernPage, JournalPage, JournalArticle, BrandDirectory, OffersPage, DiscoveryStyles } from './Discovery'
 
 const DEFAULT_SETTINGS = {
   store_name: 'Golden Touch',
@@ -148,6 +149,12 @@ function App() {
           <Route path="/account" element={<Account session={session} authReady={authReady} />} />
           <Route path="/orders" element={<Orders session={session} authReady={authReady} />} />
           <Route path="/track" element={<TrackOrder />} />
+          <Route path="/categories/:slug" element={<><DiscoveryStyles /><CategoryPage products={products} addToCart={addToCart} /></>} />
+          <Route path="/solutions/:slug" element={<><DiscoveryStyles /><ConcernPage products={products} addToCart={addToCart} /></>} />
+          <Route path="/journal" element={<><DiscoveryStyles /><JournalPage products={products} addToCart={addToCart} /></>} />
+          <Route path="/journal/:slug" element={<><DiscoveryStyles /><JournalArticle products={products} addToCart={addToCart} /></>} />
+          <Route path="/brands" element={<><DiscoveryStyles /><BrandDirectory products={products} /></>} />
+          <Route path="/offers" element={<><DiscoveryStyles /><OffersPage products={products} addToCart={addToCart} /></>} />
           <Route path="/admin/*" element={<Admin session={session} authReady={authReady} products={products} refreshProducts={() => supabase.from('products').select('*').order('created_at', { ascending: false }).then(({ data }) => setProducts(data || []))} />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
@@ -162,7 +169,8 @@ function Home({ products, loading, addToCart, settings }) {
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeConcern, setActiveConcern] = useState('')
   const [slide, setSlide] = useState(0)
-  const categories = useMemo(() => ['All', ...new Set(products.map((item) => item.category).filter(Boolean))], [products])
+  const categories = useMemo(() => ['All', ...GT_CATEGORIES.map((item) => item.name)], [])
+  const purchasableProducts = products.filter((item) => Number(item.price) > 0 && Number(item.stock) > 0 && item.image_url)
   const slides = [
     { eyebrow: 'YOUR BEAUTY, YOUR MOMENT', title: <>Feel beautiful.<br /><em>Every day.</em></>, copy: 'Thoughtfully selected beauty essentials and professional care from Golden Touch.' },
     { eyebrow: 'CARE THAT FEELS PERSONAL', title: <>A little care.<br /><em>A brighter you.</em></>, copy: 'Discover beauty favourites and make time for the care you deserve.' },
@@ -173,7 +181,7 @@ function Home({ products, loading, addToCart, settings }) {
     const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 6500)
     return () => window.clearInterval(timer)
   }, [])
-  const categoryProducts = activeCategory === 'All' ? products : products.filter((item) => item.category === activeCategory)
+  const categoryProducts = activeCategory === 'All' ? purchasableProducts : purchasableProducts.filter((item) => String(item.category || '').toLowerCase() === activeCategory.toLowerCase())
   const visibleProducts = activeConcern ? categoryProducts.filter((item) => `${item.name || ''} ${item.category || ''} ${item.description || ''}`.toLowerCase().includes(activeConcern)) : categoryProducts
   return (
     <>
@@ -195,18 +203,10 @@ function Home({ products, loading, addToCart, settings }) {
         <div className="gt-category-heading"><div><div className="gt-eyebrow">FIND YOUR FAVOURITES</div><h2>Shop by category</h2></div><a href="#shop">View collection <ArrowRight size={15} /></a></div>
         <div className="gt-category-scroller">{categories.map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => { setActiveCategory(category); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}>{category === 'All' ? 'All products' : category}<ChevronRight size={14} /></button>)}</div>
       </section>
-      <section className="gt-skin-concerns" aria-label="Solutions by skin concern">
+      <section className="gt-skin-concerns" id="solutions" aria-label="Solutions by skin concern">
         <div className="gt-concern-heading"><div><div className="gt-eyebrow">PERSONAL BEAUTY CARE</div><h2>Solutions by concern</h2><p>Choose what you would like help with and explore relevant beauty care.</p></div><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hello Golden Touch, I would like a skin assessment and skincare guidance.')}`} target="_blank" rel="noreferrer">Start skin assessment <ArrowRight size={16} /></a></div>
         <div className="gt-concern-scroller">
-          {[
-            { name: 'Acne', term: 'acne', image: 'https://images.unsplash.com/photo-1616394584738-fc6e612e71b9?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Oily skin', term: 'oily', image: 'https://images.unsplash.com/photo-1556229010-6c3f2c9ca5f8?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Dry skin', term: 'dry', image: 'https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Visible pores', term: 'pores', image: 'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Ageing', term: 'ageing', image: 'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Sun damage', term: 'sun', image: 'https://images.unsplash.com/photo-1552693673-1bf958298935?auto=format&fit=crop&w=600&q=85' },
-            { name: 'Pigmentation', term: 'pigmentation', image: 'https://images.unsplash.com/photo-1611930022073-b7a4ba5fcccd?auto=format&fit=crop&w=600&q=85' },
-          ].map((concern) => <button className="gt-concern-card" key={concern.term} onClick={() => { setActiveConcern(concern.term); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}><img src={concern.image} alt="" loading="lazy" /><span>{concern.name}</span></button>)}
+          {GT_CONCERNS.map((concern) => <Link className="gt-concern-card" key={concern.slug} to={'/solutions/'+concern.slug}><img src={concern.image} alt={concern.name} loading="lazy" /><span>{concern.name}</span></Link>)}
         </div>
         {activeConcern && <div className="gt-concern-selection"><span>Showing products related to: <b>{activeConcern}</b></span><button onClick={() => setActiveConcern('')}>Clear selection <X size={13} /></button></div>}
       </section>
@@ -233,6 +233,7 @@ function Home({ products, loading, addToCart, settings }) {
           </div>
         </div>
       </section>
+      <section className="gt-journal-teaser"><div><div className="gt-eyebrow">LEARN · CARE · GLOW</div><h2>Beauty knowledge, made simple</h2><p>Explore practical skincare, haircare and parlour guides.</p><Link className="gt-button gt-button-gold" to="/journal">Read the beauty journal <ArrowRight size={15}/></Link></div><div className="gt-journal-teaser-links">{GT_JOURNAL.slice(0,3).map((article)=><Link key={article.slug} to={'/journal/'+article.slug}><img src={article.image} alt={article.title}/><span>{article.title}</span><ArrowRight size={14}/></Link>)}</div></section>
       <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
     </>
   )
