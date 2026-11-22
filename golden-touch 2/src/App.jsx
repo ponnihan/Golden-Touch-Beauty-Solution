@@ -159,24 +159,43 @@ function App() {
 }
 
 function Home({ products, loading, addToCart, settings }) {
+  const [activeCategory, setActiveCategory] = useState('All')
+  const [slide, setSlide] = useState(0)
+  const categories = useMemo(() => ['All', ...new Set(products.map((item) => item.category).filter(Boolean))], [products])
+  const slides = [
+    { eyebrow: 'YOUR BEAUTY, YOUR MOMENT', title: <>Feel beautiful.<br /><em>Every day.</em></>, copy: 'Thoughtfully selected beauty essentials and professional care from Golden Touch.' },
+    { eyebrow: 'CARE THAT FEELS PERSONAL', title: <>A little care.<br /><em>A brighter you.</em></>, copy: 'Discover beauty favourites and make time for the care you deserve.' },
+    { eyebrow: 'WELCOME TO GOLDEN TOUCH', title: <>Your glow.<br /><em>Your confidence.</em></>, copy: 'Shop with ease, enjoy guest checkout and get friendly local support.' },
+  ]
+  useEffect(() => {
+    const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 6500)
+    return () => window.clearInterval(timer)
+  }, [])
+  const visibleProducts = activeCategory === 'All' ? products : products.filter((item) => item.category === activeCategory)
   return (
     <>
-      <section className="gt-hero">
-        <div className="gt-hero-copy">
-          <div className="gt-eyebrow"><Sparkles size={15} /> YOUR BEAUTY, YOUR MOMENT</div>
-          <h1>Feel beautiful.<br /><em>Every day.</em></h1>
-          <p>Thoughtfully selected beauty essentials and professional care from Golden Touch.</p>
+      <section className="gt-hero gt-hero-slider">
+        <div className="gt-hero-copy" key={slide}>
+          <div className="gt-eyebrow"><Sparkles size={15} /> {slides[slide].eyebrow}</div>
+          <h1>{slides[slide].title}</h1>
+          <p>{slides[slide].copy}</p>
           <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="#shop">Explore collection <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="#why-us">Why Golden Touch</a></div>
           <div className="gt-hero-promise"><ShieldCheck size={17} /> Easy ordering <span>·</span> Cash on delivery available</div>
+          <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
         </div>
         <div className="gt-hero-art" aria-label="Golden Touch beauty collection illustration">
           <div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div>
         </div>
       </section>
+      <section className="gt-promise-row"><span><ShieldCheck /> Carefully selected products</span><span><Truck /> Delivery available</span><span><ShoppingBag /> Easy guest checkout</span><span><Phone /> Friendly support</span></section>
+      <section className="gt-category-section" aria-label="Shop by category">
+        <div className="gt-category-heading"><div><div className="gt-eyebrow">FIND YOUR FAVOURITES</div><h2>Shop by category</h2></div><a href="#shop">View collection <ArrowRight size={15} /></a></div>
+        <div className="gt-category-scroller">{categories.map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => { setActiveCategory(category); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}>{category === 'All' ? 'All products' : category}<ChevronRight size={14} /></button>)}</div>
+      </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
       <section className="gt-section gt-section-products-top" id="shop">
-        <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>Shop our favourites</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{products.length} products</span></div>
-        {loading ? <div className="gt-empty">Loading our collection...</div> : products.length ? <div className="gt-product-grid">{products.slice(0, 4).map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available right now. Please check back soon.</div>}
+        <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>{activeCategory === 'All' ? 'Shop our favourites' : activeCategory}</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{visibleProducts.length} products</span></div>
+        {loading ? <div className="gt-empty">Loading our collection...</div> : visibleProducts.length ? <div className="gt-product-grid">{visibleProducts.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available in this category yet.</div>}
       </section>
       <section className="gt-parlour" id="our-parlour" style={{ backgroundImage: `linear-gradient(90deg, rgba(25,20,17,.88), rgba(25,20,17,.72)), url("${import.meta.env.BASE_URL}golden-touch-parlour.webp")`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
         <div className="gt-parlour-inner">
@@ -191,23 +210,12 @@ function Home({ products, loading, addToCart, settings }) {
             <div className="gt-eyebrow">OUR PARLOUR SERVICES</div>
             <h3>আমাদের সেবা সমূহ</h3>
             <ul>
-              <li>পারফেক্টলি ব্লেন্ডেড স্মোকি আইস</li>
-              <li>ওয়াটারপ্রুফ ও লং-লাস্টিং মেকআপ</li>
-              <li>হাই কোয়ালিটি প্রোডাক্ট ব্যবহার</li>
-              <li>আপনার মুখের সাথে মানানসই লুক</li>
-              <li>হেয়ার কাট, কালার ও স্টাইলিং</li>
-              <li>ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট</li>
-              <li>ওয়াক্সিং, থ্রেডিং ও ব্লিচ</li>
-              <li>হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও হেয়ার স্পা</li>
+              <li>পারফেক্টলি ব্লেন্ডেড স্মোকি আইস</li><li>ওয়াটারপ্রুফ ও লং-লাস্টিং মেকআপ</li><li>হাই কোয়ালিটি প্রোডাক্ট ব্যবহার</li><li>আপনার মুখের সাথে মানানসই লুক</li><li>হেয়ার কাট, কালার ও স্টাইলিং</li><li>ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট</li><li>ওয়াক্সিং, থ্রেডিং ও ব্লিচ</li><li>হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও হেয়ার স্পা</li>
             </ul>
           </div>
         </div>
       </section>
-      { !loading && products.length > 4 && <section className="gt-section gt-section-products-more" aria-label="More beauty products">
-        <div className="gt-section-heading"><div><div className="gt-eyebrow">MORE TO LOVE</div><h2>Explore more products</h2><p>Find the little essentials for your daily glow.</p></div><span className="gt-muted-count">{products.length - 4} more products</span></div>
-        <div className="gt-product-grid">{products.slice(4).map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div>
-      </section> }
-      <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
+      <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
     </>
   )
 }
@@ -590,6 +598,9 @@ const APP_STYLES = `
 @media(max-width:1050px){.gt-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.gt-header{height:78px}}
 @media(max-width:760px){.gt-parlour{padding:52px 20px}.gt-parlour-inner{grid-template-columns:1fr;gap:30px}.gt-parlour-services{padding:23px 20px}.gt-parlour-services ul{grid-template-columns:1fr}.gt-header{height:70px}.gt-hero{grid-template-columns:1fr;padding:44px 22px 28px;min-height:0}.gt-hero-art{height:260px}.gt-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gt-product-image{height:175px}.gt-section{padding:54px 17px}}
 @media(max-width:420px){.gt-product-image{height:145px}.gt-product-details{padding:11px}}
+/* Carnesia-inspired browsing features with original Golden Touch identity */
+.gt-hero-slider{position:relative}.gt-hero-copy{animation:gt-fade-in .45s ease}.gt-slider-controls{display:flex;gap:8px;margin-top:24px}.gt-slider-controls button{width:28px;height:4px;border:0;background:#c9bba9;padding:0;cursor:pointer}.gt-slider-controls button.active{width:48px;background:#9a713f}.gt-promise-row{display:grid;grid-template-columns:repeat(4,1fr);gap:15px;padding:20px clamp(20px,8vw,120px);border-bottom:1px solid var(--gt-line);background:#fff}.gt-promise-row span{display:flex;align-items:center;justify-content:center;gap:9px;color:#6e6257;font-size:11px}.gt-promise-row svg{width:18px;height:18px;color:#a77d48}.gt-category-section{padding:35px clamp(20px,8vw,120px) 26px;background:#faf8f4}.gt-category-heading{display:flex;align-items:end;justify-content:space-between;gap:16px;margin-bottom:18px}.gt-category-heading h2{font:500 27px 'Playfair Display',serif;margin:8px 0 0}.gt-category-heading>a{display:flex;align-items:center;gap:6px;color:#8f6735;text-decoration:none;font-size:11px}.gt-category-scroller{display:flex;gap:10px;overflow-x:auto;padding:2px 1px 10px;scroll-snap-type:x mandatory}.gt-category-scroller button{flex:0 0 auto;display:flex;align-items:center;gap:9px;border:1px solid #e5dbce;background:white;padding:12px 17px;color:#65584d;font:600 11px 'DM Sans';cursor:pointer;scroll-snap-align:start;transition:.2s}.gt-category-scroller button.active,.gt-category-scroller button:hover{background:#29221c;border-color:#29221c;color:white}.gt-category-scroller button svg{width:13px}.gt-section-products-top{scroll-margin-top:105px}.gt-product-card{overflow:hidden}.gt-product-bottom button:hover:not(:disabled){background:#a77d48;border-color:#a77d48}.gt-header{backdrop-filter:blur(14px)}.gt-nav a{position:relative}.gt-nav a.active:after{content:'';position:absolute;left:0;right:0;bottom:-9px;height:2px;background:#b58a4d}@keyframes gt-fade-in{from{opacity:.35;transform:translateY(7px)}to{opacity:1;transform:translateY(0)}}@media(max-width:760px){.gt-promise-row{grid-template-columns:repeat(2,1fr);padding:17px 14px;gap:14px}.gt-promise-row span{justify-content:flex-start;font-size:10px}.gt-category-section{padding:28px 17px 18px}.gt-category-heading h2{font-size:23px}.gt-category-scroller button{padding:11px 14px}.gt-hero-copy{animation:none}}
+
 `
 
 export default App
