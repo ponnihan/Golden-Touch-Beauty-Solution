@@ -215,7 +215,7 @@ function Home({ products, loading, addToCart, settings }) {
           </div>
         </div>
       </section>
-      <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
+      <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
     </>
   )
 }
