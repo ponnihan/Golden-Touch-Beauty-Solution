@@ -70,6 +70,9 @@ function App() {
     try { return JSON.parse(localStorage.getItem('gt_cart') || '[]') } catch { return [] }
   })
   const [mobileMenu, setMobileMenu] = useState(false)
+  const [language, setLanguage] = useState(() => localStorage.getItem('gt_language') === 'bn' ? 'bn' : 'en')
+  const tx = (en, bn) => language === 'bn' ? bn : en
+  useEffect(() => { localStorage.setItem('gt_language', language); document.documentElement.lang = language }, [language])
 
   useEffect(() => {
     localStorage.setItem('gt_cart', JSON.stringify(cart))
@@ -121,7 +124,7 @@ function App() {
   return (
     <div className="gt-app">
       <style>{APP_STYLES}</style>
-      <div className="gt-announcement">Beauty, care & confidence — delivered to your door</div>
+      <div className="gt-announcement">{tx("Beauty, care & confidence — delivered to your door","সৌন্দর্য, যত্ন ও আত্মবিশ্বাস — আপনার দোরগোড়ায়")}</div>
       <header className="gt-header">
         <Link to="/" className="gt-brand" onClick={() => setMobileMenu(false)}>
           <img className="gt-logo-image" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" />
@@ -139,14 +142,14 @@ function App() {
           <NavLink to="/account" onClick={() => setMobileMenu(false)}>Account</NavLink>
         </nav>
         <div className="gt-head-actions">
-          <Link to="/cart" className="gt-cart-link" aria-label={`Cart, ${cartCount} items`}><ShoppingBag size={19} /><span>Cart</span><b>{cartCount}</b></Link>
+          <Link to="/cart" className="gt-cart-link" aria-label={`Cart, ${cartCount} items`}><ShoppingBag size={19} /><span>{tx("Cart","ব্যাগ")}</span><b>{cartCount}</b></Link>
           <button className="gt-menu-button" onClick={() => setMobileMenu((value) => !value)} aria-label="Toggle menu">{mobileMenu ? <X /> : <Menu />}</button>
         </div>
       </header>
 
       <main>
         <Routes>
-          <Route path="/" element={<Home products={filteredProducts} loading={loading} addToCart={addToCart} settings={settings} />} />
+          <Route path="/" element={<Home products={filteredProducts} loading={loading} addToCart={addToCart} settings={settings} language={language} />} />
           <Route path="/cart" element={<CartPage cart={cart} updateQuantity={updateQuantity} settings={settings} />} />
           <Route path="/checkout" element={<Checkout cart={cart} setCart={setCart} settings={settings} />} />
           <Route path="/account" element={<Account session={session} authReady={authReady} />} />
@@ -164,12 +167,12 @@ function App() {
         </Routes>
       </main>
 
-      <Footer settings={settings} />
+      <Footer settings={settings} language={language} />
     </div>
   )
 }
 
-function Home({ products, loading, addToCart, settings }) {
+function Home({ products, loading, addToCart, settings, language }) {\n  const tx = (en, bn) => language === "bn" ? bn : en
   const [activeCategory, setActiveCategory] = useState('All')
   const [activeConcern, setActiveConcern] = useState('')
   const [slide, setSlide] = useState(0)
@@ -622,6 +625,8 @@ const APP_STYLES = `
 .gt-hero:has(.gt-hero-services) .gt-hero-copy .gt-eyebrow{color:#d8b276}
 .gt-hero:has(.gt-hero-services) .gt-hero-actions .gt-button-outline{color:#f3e7d8;border-color:#b58a4d}
 @media(max-width:760px){.gt-hero:has(.gt-hero-services){padding:38px 18px;gap:24px}.gt-hero-services{padding:22px 18px}.gt-hero-services ul{grid-template-columns:1fr 1fr;column-gap:14px}.gt-hero-services li{font-size:10px;padding:10px 0 10px 17px}.gt-hero-services h2{font-size:25px}}
+
+.gt-language-toggle{border:1px solid #d8c8b3;background:#fff;color:#5f472b;padding:9px 12px;font:700 11px 'DM Sans';cursor:pointer;white-space:nowrap}@media(max-width:760px){.gt-language-toggle{padding:7px 9px}}
 
 `
 
