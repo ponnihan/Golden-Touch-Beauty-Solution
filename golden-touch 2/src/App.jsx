@@ -174,6 +174,10 @@ function Home({ products, loading, addToCart, settings }) {
         </div>
       </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
+      <section className="gt-section gt-section-products-top" id="shop">
+        <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>Shop our favourites</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{products.length} products</span></div>
+        {loading ? <div className="gt-empty">Loading our collection...</div> : products.length ? <div className="gt-product-grid">{products.slice(0, 4).map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available right now. Please check back soon.</div>}
+      </section>
       <section className="gt-parlour" id="our-parlour" style={{ backgroundImage: `linear-gradient(90deg, rgba(25,20,17,.88), rgba(25,20,17,.72)), url("${import.meta.env.BASE_URL}golden-touch-parlour.webp")`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
         <div className="gt-parlour-inner">
           <div className="gt-parlour-copy">
@@ -199,10 +203,10 @@ function Home({ products, loading, addToCart, settings }) {
           </div>
         </div>
       </section>
-      <section className="gt-section" id="shop">
-        <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>Shop our favourites</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{products.length} products</span></div>
-        {loading ? <div className="gt-empty">Loading our collection...</div> : products.length ? <div className="gt-product-grid">{products.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available right now. Please check back soon.</div>}
-      </section>
+      { !loading && products.length > 4 && <section className="gt-section gt-section-products-more" aria-label="More beauty products">
+        <div className="gt-section-heading"><div><div className="gt-eyebrow">MORE TO LOVE</div><h2>Explore more products</h2><p>Find the little essentials for your daily glow.</p></div><span className="gt-muted-count">{products.length - 4} more products</span></div>
+        <div className="gt-product-grid">{products.slice(4).map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div>
+      </section> }
       <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
     </>
   )
