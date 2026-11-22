@@ -11,7 +11,7 @@ permissions:
   id-token: write
 
 concurrency:
-  group: pages
+  group: github-pages
   cancel-in-progress: true
 
 jobs:
@@ -26,18 +26,27 @@ jobs:
         with:
           node-version: 20
 
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+
       - name: Install dependencies
         working-directory: ./golden-touch 2
         run: npm install
 
-      - name: Build Vite site
+      - name: Build website
         working-directory: ./golden-touch 2
+        env:
+          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_ANON_KEY: ${{ vars.VITE_SUPABASE_ANON_KEY }}
+          VITE_ADMIN_EMAIL: ${{ vars.VITE_ADMIN_EMAIL }}
         run: npm run build
 
-      - name: Verify build output
-        run: test -f "golden-touch 2/dist/index.html"
+      - name: Prepare SPA fallback
+        run: |
+          test -f "golden-touch 2/dist/index.html"
+          cp "golden-touch 2/dist/index.html" "golden-touch 2/dist/404.html"
 
-      - name: Upload GitHub Pages artifact
+      - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: "./golden-touch 2/dist"
