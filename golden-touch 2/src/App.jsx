@@ -174,7 +174,7 @@ function Home({ products, loading, addToCart, settings }) {
         </div>
       </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
-      <section className="gt-parlour" id="our-parlour">
+      <section className="gt-parlour" id="our-parlour" style={{ backgroundImage: `linear-gradient(90deg, rgba(25,20,17,.88), rgba(25,20,17,.72)), url("${import.meta.env.BASE_URL}golden-touch-parlour.webp")`, backgroundSize: "cover", backgroundPosition: "center", backgroundRepeat: "no-repeat" }}>
         <div className="gt-parlour-inner">
           <div className="gt-parlour-copy">
             <div className="gt-eyebrow">GOLDEN TOUCH · LADIES BEAUTY PARLOUR</div>
