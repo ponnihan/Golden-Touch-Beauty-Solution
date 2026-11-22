@@ -132,18 +132,18 @@ function App() {
         </Link>
         <div className="gt-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search beauty products..." aria-label="Search products" /></div>
         <nav className={`gt-nav ${mobileMenu ? 'is-open' : ''}`}>
-          <NavLink to="/" end onClick={() => setMobileMenu(false)}>Home</NavLink>
-          <NavLink to="/offers" onClick={() => setMobileMenu(false)}>Offers</NavLink>
-          <NavLink to="/brands" onClick={() => setMobileMenu(false)}>Brands</NavLink>
-          <NavLink to="/journal" onClick={() => setMobileMenu(false)}>Beauty Journal</NavLink>
+          <NavLink to="/" end onClick={() => setMobileMenu(false)}>{tx("Home","হোম")}</NavLink>
+          <NavLink to="/offers" onClick={() => setMobileMenu(false)}>{tx("Offers","অফার")}</NavLink>
+          <NavLink to="/brands" onClick={() => setMobileMenu(false)}>{tx("Brands","ব্র্যান্ড")}</NavLink>
+          <NavLink to="/journal" onClick={() => setMobileMenu(false)}>{tx("Beauty Journal","বিউটি জার্নাল")}</NavLink>
           <details className="gt-mega-wrap"><summary>{tx("Shop","শপ")} <ChevronRight size={13}/></summary><div className="gt-mega-menu">
             <div><b>{tx("SHOP BY CATEGORY","ক্যাটাগরি অনুযায়ী")}</b><Link to="/categories/skincare">{tx("Skincare","ত্বকের যত্ন")}</Link><Link to="/categories/makeup">{tx("Makeup","মেকআপ")}</Link><Link to="/categories/hair-care">{tx("Hair Care","চুলের যত্ন")}</Link><Link to="/categories/body-care">{tx("Body Care","শরীরের যত্ন")}</Link><Link to="/categories/lip-care">{tx("Lip Care","ঠোঁটের যত্ন")}</Link></div>
             <div><b>{tx("DISCOVER","আরও দেখুন")}</b><Link to="/offers">{tx("Offers & Bundles","অফার ও কম্বো")}</Link><Link to="/brands">{tx("Shop by Brand","ব্র্যান্ড")}</Link><Link to="/journal">{tx("Beauty Journal","বিউটি জার্নাল")}</Link><a href="#solutions">{tx("Beauty Concerns","ত্বকের সমস্যা")}</a></div>
             <div className="gt-mega-feature"><span>{tx("GOLDEN TOUCH PARLOUR","গোল্ডেন টাচ পার্লার")}</span><b>{tx("Beauty care, with a personal touch.","আপনার জন্য যত্নশীল সৌন্দর্যসেবা।")}</b><a href="#our-parlour">{tx("Explore & contact","দেখুন ও যোগাযোগ করুন")} <ArrowRight size={14}/></a><small>01990941408</small></div>
           </div></details>
           <a href={`${import.meta.env.BASE_URL}#our-parlour`} onClick={() => setMobileMenu(false)}>{tx("Our Parlour","আমাদের পার্লার")}</a>
-          <NavLink to="/track" onClick={() => setMobileMenu(false)}>Track order</NavLink>
-          <NavLink to="/account" onClick={() => setMobileMenu(false)}>Account</NavLink>
+          <NavLink to="/track" onClick={() => setMobileMenu(false)}>{tx("Track order","অর্ডার ট্র্যাক")}</NavLink>
+          <NavLink to="/account" onClick={() => setMobileMenu(false)}>{tx("Account","অ্যাকাউন্ট")}</NavLink>
         </nav>
         <div className="gt-head-actions">
           <Link to="/cart" className="gt-cart-link" aria-label={`Cart, ${cartCount} items`}><ShoppingBag size={19} /><span>{tx("Cart","ব্যাগ")}</span><b>{cartCount}</b></Link>
@@ -212,11 +212,11 @@ function Home({ products, loading, addToCart, settings, language }) {\n  const t
       </section>
       <section className="gt-promise-row"><span><ShieldCheck /> Carefully selected products</span><span><Truck /> Delivery available</span><span><ShoppingBag /> Easy guest checkout</span><span><Phone /> Friendly support</span></section>
       <section className="gt-category-section" aria-label="Shop by category">
-        <div className="gt-category-heading"><div><div className="gt-eyebrow">FIND YOUR FAVOURITES</div><h2>Shop by category</h2></div><a href="#shop">View collection <ArrowRight size={15} /></a></div>
+        <div className="gt-category-heading"><div><div className="gt-eyebrow">{tx("FIND YOUR FAVOURITES","আপনার পছন্দ খুঁজুন")}</div><h2>{tx("Shop by category","ক্যাটাগরি অনুযায়ী কিনুন")}</h2></div><a href="#shop">{tx("View collection","সব পণ্য দেখুন")} <ArrowRight size={15} /></a></div>
         <div className="gt-category-scroller">{categories.map((category) => <button key={category} className={activeCategory === category ? 'active' : ''} onClick={() => { setActiveCategory(category); document.getElementById('shop')?.scrollIntoView({ behavior: 'smooth' }) }}>{category === 'All' ? 'All products' : category}<ChevronRight size={14} /></button>)}</div>
       </section>
       <section className="gt-skin-concerns" id="solutions" aria-label="Solutions by skin concern">
-        <div className="gt-concern-heading"><div><div className="gt-eyebrow">PERSONAL BEAUTY CARE</div><h2>Solutions by concern</h2><p>Choose what you would like help with and explore relevant beauty care.</p></div><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hello Golden Touch, I would like a skin assessment and skincare guidance.')}`} target="_blank" rel="noreferrer">Start skin assessment <ArrowRight size={16} /></a></div>
+        <div className="gt-concern-heading"><div><div className="gt-eyebrow">{tx("PERSONAL BEAUTY CARE","ব্যক্তিগত সৌন্দর্য পরিচর্যা")}</div><h2>{tx("Solutions by concern","সমস্যা অনুযায়ী সমাধান")}</h2><p>{tx("Choose what you would like help with and explore relevant beauty care.","আপনার প্রয়োজন বেছে নিন এবং প্রাসঙ্গিক সৌন্দর্য পরিচর্যা দেখুন।")}</p></div><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}?text=${encodeURIComponent('Hello Golden Touch, I would like a skin assessment and skincare guidance.')}`} target="_blank" rel="noreferrer">{tx("Start skin assessment","ত্বকের পরামর্শ নিন")} <ArrowRight size={16} /></a></div>
         <div className="gt-concern-scroller">
           {GT_CONCERNS.map((concern) => <Link className="gt-concern-card" key={concern.slug} to={'/solutions/'+concern.slug}><img src={concern.image} alt={concern.name} loading="lazy" /><span>{concern.name}</span></Link>)}
         </div>
@@ -224,11 +224,11 @@ function Home({ products, loading, addToCart, settings, language }) {\n  const t
       </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
       <section className="gt-section gt-section-products-top" id="shop">
-        <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>{activeCategory === 'All' ? 'Shop our favourites' : activeCategory}</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{visibleProducts.length} products</span></div>
-        {loading ? <div className="gt-empty">Loading our collection...</div> : visibleProducts.length ? <div className="gt-product-grid">{visibleProducts.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available in this category yet.</div>}
+        <div className="gt-section-heading"><div><div className="gt-eyebrow">{tx("THE GOLDEN COLLECTION","গোল্ডেন কালেকশন")}</div><h2>{activeCategory === 'All' ? 'Shop our favourites' : activeCategory}</h2><p>{tx("Little essentials. A more confident you.","প্রয়োজনীয় যত্নে আরও আত্মবিশ্বাসী আপনি।")}</p></div><span className="gt-muted-count">{visibleProducts.length} products</span></div>
+        {loading ? <div className="gt-empty">{tx("Loading our collection...","পণ্য লোড হচ্ছে...")}</div> : visibleProducts.length ? <div className="gt-product-grid">{visibleProducts.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">{tx("No products are available in this category yet.","এই ক্যাটাগরিতে এখনো কোনো পণ্য পাওয়া যাচ্ছে না।")}</div>}
       </section>
-      <section className="gt-journal-teaser"><div><div className="gt-eyebrow">LEARN · CARE · GLOW</div><h2>Beauty knowledge, made simple</h2><p>Explore practical skincare, haircare and parlour guides.</p><Link className="gt-button gt-button-gold" to="/journal">Read the beauty journal <ArrowRight size={15}/></Link></div><div className="gt-journal-teaser-links">{GT_JOURNAL.slice(0,3).map((article)=><Link key={article.slug} to={'/journal/'+article.slug}><img src={article.image} alt={article.title}/><span>{article.title}</span><ArrowRight size={14}/></Link>)}</div></section>
-      <section className="gt-why" id="why-us"><div className="gt-eyebrow">MORE THAN A STORE</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>Care in every detail</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>Checkout made simple</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>Here to help</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">Chat with us <ArrowRight size={15} /></a></article></div></section>
+      <section className="gt-journal-teaser"><div><div className="gt-eyebrow">{tx("LEARN · CARE · GLOW","জানুন · যত্ন নিন · উজ্জ্বল থাকুন")}</div><h2>{tx("Beauty knowledge, made simple","সৌন্দর্যচর্চার সহজ পরামর্শ")}</h2><p>{tx("Explore practical skincare, haircare and parlour guides.","ত্বক, চুল ও পার্লার বিষয়ে ব্যবহারিক পরামর্শ পড়ুন।")}</p><Link className="gt-button gt-button-gold" to="/journal">{tx("Read the beauty journal","বিউটি জার্নাল পড়ুন")} <ArrowRight size={15}/></Link></div><div className="gt-journal-teaser-links">{GT_JOURNAL.slice(0,3).map((article)=><Link key={article.slug} to={'/journal/'+article.slug}><img src={article.image} alt={article.title}/><span>{article.title}</span><ArrowRight size={14}/></Link>)}</div></section>
+      <section className="gt-why" id="why-us"><div className="gt-eyebrow">{tx("MORE THAN A STORE","শুধু দোকান নয়")}</div><h2>A little time for <em>yourself.</em></h2><div className="gt-why-grid"><article><Heart /><h3>{tx("Care in every detail","প্রতিটি কাজে যত্ন")}</h3><p>We believe beauty should feel personal, easy and joyful.</p></article><article><ShieldCheck /><h3>{tx("Checkout made simple","সহজ চেকআউট")}</h3><p>Order as a guest. Create an account only if you want to.</p></article><article><Phone /><h3>{tx("Here to help","সহায়তায় পাশে আছি")}</h3><p>Questions? Reach out to our team for friendly support.</p><a href={`https://wa.me/${String(settings.whatsapp_number || '').replace(/\D/g, '')}`} target="_blank" rel="noreferrer">{tx("Chat with us","আমাদের সঙ্গে চ্যাট করুন")} <ArrowRight size={15} /></a></article></div></section>
     </>
   )
 }
