@@ -130,6 +130,9 @@ function App() {
         <div className="gt-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search beauty products..." aria-label="Search products" /></div>
         <nav className={`gt-nav ${mobileMenu ? 'is-open' : ''}`}>
           <NavLink to="/" end onClick={() => setMobileMenu(false)}>Home</NavLink>
+          <NavLink to="/offers" onClick={() => setMobileMenu(false)}>Offers</NavLink>
+          <NavLink to="/brands" onClick={() => setMobileMenu(false)}>Brands</NavLink>
+          <NavLink to="/journal" onClick={() => setMobileMenu(false)}>Beauty Journal</NavLink>
           <a href={`${import.meta.env.BASE_URL}#shop`} onClick={() => setMobileMenu(false)}>Shop</a>
           <a href={`${import.meta.env.BASE_URL}#our-parlour`} onClick={() => setMobileMenu(false)}>Our Parlour</a>
           <NavLink to="/track" onClick={() => setMobileMenu(false)}>Track order</NavLink>
@@ -247,7 +250,7 @@ function ProductCard({ product, addToCart }) {
         {product.image_url ? <img src={product.image_url} alt={product.name} loading="lazy" /> : <div className="gt-product-placeholder"><Sparkles size={34} /><span>GOLDEN TOUCH</span></div>}
         <span className="gt-product-category">{product.category || 'Beauty'}</span>
       </div>
-      <div className="gt-product-details"><h3>{product.name}</h3><p>{product.description || 'A Golden Touch favourite.'}</p><div className="gt-product-bottom"><strong>{money(product.price)}</strong><button disabled={outOfStock} onClick={() => addToCart(product)}>{outOfStock ? 'Out of stock' : <><Plus size={16} /> Add</>}</button></div></div>
+      <div className="gt-product-details"><h3>{product.name}</h3><p>{product.description || 'A Golden Touch favourite.'}</p><ul className="gt-product-bullets"><li>{product.category || 'Beauty care'}</li><li>Available to order</li><li>Follow the product label for directions</li></ul><div className="gt-product-bottom"><strong>{money(product.price)}</strong><button disabled={outOfStock} onClick={() => addToCart(product)}>{outOfStock ? 'Out of stock' : <><Plus size={16} /> Add</>}</button></div></div>
     </article>
   )
 }
@@ -571,7 +574,7 @@ function PageHeading({ eyebrow, title, subtitle }) {
 
 function Footer({ settings }) {
   const phone = settings.contact_phone || DEFAULT_SETTINGS.contact_phone
-  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-logo-image" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
+  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-logo-image" src={`${import.meta.env.BASE_URL}golden-touch-logo.jpeg`} alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/offers">Offers & bundles</Link><Link to="/brands">Shop by brand</Link><Link to="/journal">Beauty journal</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link><Link to="/#our-parlour">Our parlour</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
 }
 
 function NotFound() {
