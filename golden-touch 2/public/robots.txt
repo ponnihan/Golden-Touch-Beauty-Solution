@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://ponnihan.github.io/Golden-Touch-Beauty-Solution/sitemap.xml
