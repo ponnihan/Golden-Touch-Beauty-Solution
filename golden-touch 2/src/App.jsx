@@ -123,7 +123,7 @@ function App() {
       <div className="gt-announcement">Beauty, care & confidence — delivered to your door</div>
       <header className="gt-header">
         <Link to="/" className="gt-brand" onClick={() => setMobileMenu(false)}>
-          <span className="gt-brand-mark">GT</span>
+          <img className="gt-logo-image" src="/golden-touch-logo.jpeg" alt="Golden Touch logo" />
           <span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span>
         </Link>
         <div className="gt-search"><Search size={17} /><input value={search} onChange={(event) => setSearch(event.target.value)} placeholder="Search beauty products..." aria-label="Search products" /></div>
@@ -514,7 +514,7 @@ function PageHeading({ eyebrow, title, subtitle }) {
 
 function Footer({ settings }) {
   const phone = settings.contact_phone || DEFAULT_SETTINGS.contact_phone
-  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><span className="gt-brand-mark">GT</span><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
+  return <footer className="gt-footer"><div className="gt-footer-main"><div><Link className="gt-brand gt-footer-brand" to="/"><img className="gt-logo-image" src="/golden-touch-logo.jpeg" alt="Golden Touch logo" /><span><strong>GOLDEN TOUCH</strong><small>BEAUTY · CARE · CONFIDENCE</small></span></Link><p>Beauty, care and confidence.</p></div><div><b>Explore</b><Link to="/">Home</Link><Link to="/orders">My orders</Link><Link to="/track">Track order</Link></div><div><b>Need help?</b><a href={`tel:${phone}`}><Phone size={15} /> {phone}</a><Link to="/account">My account</Link><Link to="/admin">Seller Central</Link></div></div><div className="gt-copyright">© {new Date().getFullYear()} Golden Touch. All rights reserved.</div></footer>
 }
 
 function NotFound() {
@@ -531,7 +531,7 @@ const APP_STYLES = `
 /* Golden Touch premium storefront styling */
 .gt-announcement{background:#171513;color:#f7e8d1;letter-spacing:.16em;padding:10px}
 .gt-header{height:90px;box-shadow:0 3px 18px #1b13090a}
-.gt-brand-mark{width:48px;height:48px;border-radius:2px;background:#241e19;color:#e8c58f;border-color:#241e19}
+.gt-brand-mark{width:48px;height:48px;border-radius:2px;background:#241e19;color:#e8c58f;border-color:#241e19}.gt-logo-image{width:54px;height:54px;object-fit:contain;display:block;flex:0 0 auto}.gt-footer-brand .gt-logo-image{width:58px;height:58px}
 .gt-search{width:min(390px,30vw);border-radius:30px;background:#faf8f4;padding:12px 17px}
 .gt-nav{gap:clamp(13px,2vw,27px)}
 .gt-nav a{font-weight:600}
