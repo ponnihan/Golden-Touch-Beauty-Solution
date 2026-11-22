@@ -130,6 +130,7 @@ function App() {
         <nav className={`gt-nav ${mobileMenu ? 'is-open' : ''}`}>
           <NavLink to="/" end onClick={() => setMobileMenu(false)}>Home</NavLink>
           <a href="/#shop" onClick={() => setMobileMenu(false)}>Shop</a>
+          <a href="/#our-parlour" onClick={() => setMobileMenu(false)}>Our Parlour</a>
           <NavLink to="/track" onClick={() => setMobileMenu(false)}>Track order</NavLink>
           <NavLink to="/account" onClick={() => setMobileMenu(false)}>Account</NavLink>
         </nav>
@@ -173,6 +174,31 @@ function Home({ products, loading, addToCart, settings }) {
         </div>
       </section>
       <section className="gt-trust-strip"><div><b>01</b><span>Carefully selected<br />products</span></div><div><b>02</b><span>Simple & secure<br />checkout</span></div><div><b>03</b><span>Personal beauty<br />care</span></div><div><b>04</b><span>Friendly local<br />support</span></div></section>
+      <section className="gt-parlour" id="our-parlour">
+        <div className="gt-parlour-inner">
+          <div className="gt-parlour-copy">
+            <div className="gt-eyebrow">GOLDEN TOUCH · LADIES BEAUTY PARLOUR</div>
+            <h2>Where beauty meets <em>confidence.</em></h2>
+            <p>সৌন্দর্য আপনার, আমাদের প্রতিশ্রুতি। আপনার সৌন্দর্য ও যত্নে Golden Touch সবসময় পাশে।</p>
+            <div className="gt-parlour-location"><MapPin size={18} /><span><b>Visit our parlour</b><small>বাকড়া বাজার, ঝিকরগাছা, যশোর</small></span></div>
+            <a className="gt-button gt-button-gold" href={`tel:${String(settings.contact_phone || '').replace(/[^0-9+]/g, '')}`}><Phone size={16} /> Call 01990941408</a>
+          </div>
+          <div className="gt-parlour-services">
+            <div className="gt-eyebrow">OUR PARLOUR SERVICES</div>
+            <h3>আমাদের সেবা সমূহ</h3>
+            <ul>
+              <li>পারফেক্টলি ব্লেন্ডেড স্মোকি আইস</li>
+              <li>ওয়াটারপ্রুফ ও লং-লাস্টিং মেকআপ</li>
+              <li>হাই কোয়ালিটি প্রোডাক্ট ব্যবহার</li>
+              <li>আপনার মুখের সাথে মানানসই লুক</li>
+              <li>হেয়ার কাট, কালার ও স্টাইলিং</li>
+              <li>ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট</li>
+              <li>ওয়াক্সিং, থ্রেডিং ও ব্লিচ</li>
+              <li>হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও হেয়ার স্পা</li>
+            </ul>
+          </div>
+        </div>
+      </section>
       <section className="gt-section" id="shop">
         <div className="gt-section-heading"><div><div className="gt-eyebrow">THE GOLDEN COLLECTION</div><h2>Shop our favourites</h2><p>Little essentials. A more confident you.</p></div><span className="gt-muted-count">{products.length} products</span></div>
         {loading ? <div className="gt-empty">Loading our collection...</div> : products.length ? <div className="gt-product-grid">{products.map((product) => <ProductCard key={product.id} product={product} addToCart={addToCart} />)}</div> : <div className="gt-empty">No products are available right now. Please check back soon.</div>}
@@ -543,7 +569,7 @@ const APP_STYLES = `
 .gt-hero-art{height:360px;background:linear-gradient(135deg,#dfcbb3,#f5ede2 55%,#cbb293);border-radius:2px;overflow:hidden;align-items:end;padding-bottom:28px;gap:28px}
 .gt-art-glow{width:330px;height:330px;background:#f8f1e7;top:25px}
 .gt-trust-strip{background:#fff;padding-top:25px;padding-bottom:25px}
-.gt-section{padding-top:82px;padding-bottom:82px}
+.gt-parlour{padding:76px clamp(22px,8vw,120px);background:#211c18;color:#f8efe5}.gt-parlour-inner{max-width:1180px;margin:auto;display:grid;grid-template-columns:.9fr 1.1fr;gap:55px;align-items:center}.gt-parlour-copy h2{font:500 clamp(34px,4vw,48px)/1.15 'Playfair Display',serif;margin:18px 0;color:#fff}.gt-parlour-copy h2 em{color:#d2ad78}.gt-parlour-copy>p{font-size:14px;line-height:1.9;color:#cbbdaf}.gt-parlour-location{display:flex;align-items:center;gap:12px;margin:25px 0;color:#d2ad78}.gt-parlour-location b,.gt-parlour-location small{display:block}.gt-parlour-location b{font-size:12px;color:#f8efe5}.gt-parlour-location small{font-size:12px;color:#cbbdaf;margin-top:5px}.gt-parlour-services{border:1px solid #b58a4d66;padding:30px 34px;background:#ffffff08}.gt-parlour-services h3{font:500 27px 'Playfair Display',serif;color:#e4c18e;margin:12px 0 18px}.gt-parlour-services ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:1fr 1fr;gap:0 25px}.gt-parlour-services li{font-size:12px;line-height:1.6;color:#eee1d2;padding:12px 0;border-bottom:1px solid #ffffff20}.gt-parlour-services li:before{content:'✦';color:#d2ad78;margin-right:9px}.gt-parlour .gt-eyebrow{color:#d2ad78}.gt-parlour .gt-button{margin-top:5px}.gt-section{padding-top:82px;padding-bottom:82px}
 .gt-section-heading h2,.gt-why h2{font-size:clamp(32px,3.4vw,43px)}
 .gt-product-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
 .gt-product-card{border:0;background:#faf8f5;transition:transform .2s,box-shadow .2s}
@@ -558,7 +584,7 @@ const APP_STYLES = `
 .gt-why{background:#f5f0e8}.gt-why-grid article{background:#fff;padding:28px 20px}
 .gt-footer{background:#211c18}
 @media(max-width:1050px){.gt-product-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.gt-header{height:78px}}
-@media(max-width:760px){.gt-header{height:70px}.gt-hero{grid-template-columns:1fr;padding:44px 22px 28px;min-height:0}.gt-hero-art{height:260px}.gt-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gt-product-image{height:175px}.gt-section{padding:54px 17px}}
+@media(max-width:760px){.gt-parlour{padding:52px 20px}.gt-parlour-inner{grid-template-columns:1fr;gap:30px}.gt-parlour-services{padding:23px 20px}.gt-parlour-services ul{grid-template-columns:1fr}.gt-header{height:70px}.gt-hero{grid-template-columns:1fr;padding:44px 22px 28px;min-height:0}.gt-hero-art{height:260px}.gt-product-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.gt-product-image{height:175px}.gt-section{padding:54px 17px}}
 @media(max-width:420px){.gt-product-image{height:145px}.gt-product-details{padding:11px}}
 `
 
