@@ -185,7 +185,7 @@ function Home({ products, loading, addToCart, settings, language }) {
   const categories = useMemo(() => ['All', ...GT_CATEGORIES.map((item) => item.name)], [])
   const purchasableProducts = products.filter((item) => Number(item.price) > 0 && Number(item.stock) > 0 && item.image_url)
   const slides = [
-    { eyebrow: tx('GOLDEN TOUCH · LADIES BEAUTY PARLOUR','গোল্ডেন টাচ · লেডিস বিউটি পার্লার'), title: <>{tx('Where beauty meets','যেখানে সৌন্দর্যের সঙ্গে')}<br /><em>{tx('confidence.','আত্মবিশ্বাসের মিলন।')}</em></>, copy: tx('Your beauty, our promise. Golden Touch is here for your beauty and care.','সৌন্দর্য আপনার, আমাদের প্রতিশ্রুতি। আপনার সৌন্দর্য ও যত্নে Golden Touch সবসময় পাশে।'), parlour: true },
+    { eyebrow: 'GOLDEN TOUCH · LADIES BEAUTY PARLOUR', title: <>Where beauty meets<br /><em>confidence.</em></>, copy: 'Your beauty, our promise. Golden Touch is here for your beauty and care.', parlour: true },
   ]
   useEffect(() => {
     const timer = window.setInterval(() => setSlide((current) => (current + 1) % slides.length), 6500)
@@ -200,14 +200,14 @@ function Home({ products, loading, addToCart, settings, language }) {
           <div className="gt-eyebrow"><Sparkles size={15} /> {slides[slide].eyebrow}</div>
           <h1>{slides[slide].title}</h1>
           <p>{slides[slide].copy}</p>
-          <div className="gt-parlour-location"><MapPin size={22}/><span><b>{tx('Visit our parlour','আমাদের পার্লারে আসুন')}</b><small>{tx('Bakra Bazar, Jhikargachha, Jashore','বাকড়া বাজার, ঝিকরগাছা, যশোর')}</small></span></div>
-          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="https://www.google.com/maps/search/?api=1&query=Bakra+Bazar+Jhikargachha+Jashore+Bangladesh" target="_blank" rel="noreferrer">{tx('Get directions','লোকেশন দেখুন')} <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="tel:01990941408"><Phone size={15}/> {tx('Call 01990941408','কল করুন ০১৯৯০৯৪১৪০৮')}</a></div>
-          <div className="gt-hero-promise"><ShieldCheck size={17} /> {tx('Easy ordering','সহজ অর্ডার')} <span>·</span> {tx('Cash on delivery available','ক্যাশ অন ডেলিভারি সুবিধা')}</div>
+          <div className="gt-parlour-location"><MapPin size={22}/><span><b>Visit our parlour</b><small>Bakra Bazar, Jhikargachha, Jashore</small></span></div>
+          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="https://www.google.com/maps/search/?api=1&query=Bakra+Bazar+Jhikargachha+Jashore+Bangladesh" target="_blank" rel="noreferrer">Get directions <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="tel:01990941408"><Phone size={15}/> Call 01990941408</a></div>
+          <div className="gt-hero-promise"><ShieldCheck size={17} /> Easy ordering <span>·</span> Cash on delivery available</div>
           <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
         </div>
         {slides[slide].parlour ? <div className="gt-hero-services" id="our-parlour">
-          <div className="gt-eyebrow">{tx('OUR PARLOUR SERVICES','আমাদের পার্লার সেবাসমূহ')}</div><h2>{tx('Our services','আমাদের সেবাসমূহ')}</h2>
-          <ul><li>{tx('Perfectly blended smoky eyes','নিখুঁত স্মোকি আই মেকআপ')}</li><li>{tx('Waterproof, long-lasting makeup','ওয়াটারপ্রুফ ও দীর্ঘস্থায়ী মেকআপ')}</li><li>{tx('Quality beauty products','মানসম্মত বিউটি পণ্য')}</li><li>{tx('A look suited to your face','আপনার মুখের সঙ্গে মানানসই সাজ')}</li><li>{tx('Hair cut, colour & styling','হেয়ার কাট, কালার ও স্টাইলিং')}</li><li>{tx('Manicure, pedicure & nail art','ম্যানিকিউর, পেডিকিউর ও নেইল আর্ট')}</li><li>{tx('Waxing, threading & bleach','ওয়াক্সিং, থ্রেডিং ও ব্লিচ')}</li><li>{tx('Hydra facial, hair treatment & spa','হাইড্রা ফেসিয়াল, হেয়ার ট্রিটমেন্ট ও স্পা')}</li></ul>
+          <div className="gt-eyebrow">OUR PARLOUR SERVICES</div><h2>Our services</h2>
+          <ul><li>Perfectly blended smoky eyes</li><li>Waterproof, long-lasting makeup</li><li>Quality beauty products</li><li>A look suited to your face</li><li>Hair cut, colour & styling</li><li>Manicure, pedicure & nail art</li><li>Waxing, threading & bleach</li><li>Hydra facial, hair treatment & spa</li></ul>
         </div> : <div className="gt-hero-art" aria-label="Golden Touch beauty collection illustration"><div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div></div>}
       </section>
       <section className="gt-promise-row"><span><ShieldCheck /> {tx('Carefully selected products','বাছাই করা পণ্য')}</span><span><Truck /> {tx('Delivery available','ডেলিভারি সুবিধা')}</span><span><ShoppingBag /> {tx('Easy guest checkout','অতিথি হিসেবে সহজ অর্ডার')}</span><span><Phone /> {tx('Friendly support','সহযোগিতাপূর্ণ সেবা')}</span></section>
