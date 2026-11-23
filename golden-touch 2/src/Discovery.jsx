@@ -3,7 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import { ArrowRight, BookOpen, CheckCircle2, ChevronRight, MessageCircle, ShoppingBag, Sparkles } from 'lucide-react'
 
 const WA = 'https://wa.me/8801990941408?text='
-const slugify = (s) => String(s || '').toLowerCase().trim().replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
+const slugify = (s) => String(s || '').toLowerCase().trim().replace(/[’']/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')
 const image = (id) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=1000&q=88`
 
 export const GT_CATEGORIES = [
