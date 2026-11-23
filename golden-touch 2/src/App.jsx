@@ -241,7 +241,7 @@ function ProductCard({ product, addToCart }) {
         {product.image_url ? <img src={product.image_url} alt={product.name} loading="lazy" /> : <div className="gt-product-placeholder"><Sparkles size={34} /><span>GOLDEN TOUCH</span></div>}
         <span className="gt-product-category">{product.category || 'Beauty'}</span>
       </Link>
-      <div className="gt-product-details"><h3><Link to={`/product/${product.id}`}>{product.name}</Link></h3><p>{product.description || 'Contact Golden Touch for verified product information.'}</p><ul className="gt-product-bullets"><li>{product.category || 'Beauty care'}</li><li>{Number(product.stock)>0 ? `In stock: ${Number(product.stock)}` : 'Out of stock'}</li><li>Check the product details for verified usage information</li></ul><div className="gt-product-bottom"><strong>{money(product.price)}</strong><button disabled={outOfStock} onClick={() => addToCart(product)}>{outOfStock ? 'Out of stock' : <><Plus size={16} /> Add</>}</button></div></div>
+      <div className="gt-product-details"><h3><Link to={`/product/${product.id}`}>{product.name}</Link></h3><ul className="gt-product-bullets"><li>{product.category || 'Beauty care'}</li>{String(product.description || 'Follow the product label for directions.').split(/\n|•/).map((point) => point.trim()).filter(Boolean).map((point, index) => <li key={index}>{point}</li>)}<li>{Number(product.stock)>0 ? `In stock: ${Number(product.stock)}` : 'Out of stock — availability to be confirmed'}</li></ul><div className="gt-product-bottom"><strong>{money(product.price)}</strong><button disabled={outOfStock} onClick={() => addToCart(product)}>{outOfStock ? 'Out of stock' : <><Plus size={16} /> Add</>}</button></div></div>
     </article>
   )
 }
