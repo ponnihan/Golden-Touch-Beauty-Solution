@@ -636,6 +636,8 @@ const APP_STYLES = `
 .gt-mega-menu{position:absolute;z-index:40;top:34px;left:50%;transform:translateX(-35%);width:min(700px,88vw);padding:24px;background:#fffdf9;border:1px solid #e7ddcf;box-shadow:0 18px 45px #21170f20;display:grid;grid-template-columns:1fr 1fr 1.15fr;gap:22px;color:#33271d}
 .gt-mega-menu>div{display:flex;flex-direction:column;align-items:flex-start;gap:12px}.gt-mega-menu b{font-size:10px;letter-spacing:.12em;color:#a17a48}.gt-mega-menu a{font-size:12px!important;color:#5e5145!important;text-decoration:none!important}.gt-mega-feature{background:#f2eadf;padding:17px}.gt-mega-feature span,.gt-mega-feature small{font-size:9px;color:#997344}.gt-mega-feature b{font:500 18px/1.4 "Playfair Display",serif!important;color:#32261c!important}.gt-mega-feature a{color:#8a6334!important;font-weight:700}
 @media(max-width:760px){.gt-mega-wrap{width:100%}.gt-mega-wrap summary{padding:10px 0}.gt-mega-menu{position:static;transform:none;width:100%;grid-template-columns:1fr 1fr;padding:15px;box-shadow:none;margin:6px 0 10px}.gt-mega-feature{grid-column:1/-1}}
+.gt-mega-wrap:not([open])>.gt-mega-menu{display:none}.gt-mega-wrap[open]>.gt-mega-menu{display:grid}.gt-mega-wrap summary{user-select:none}.gt-mega-wrap[open] summary svg{transform:rotate(90deg)}
+
 `
 
 export default App
