@@ -195,21 +195,28 @@ function Home({ products, loading, addToCart, settings, language }) {
   const visibleProducts = activeConcern ? categoryProducts.filter((item) => `${item.name || ''} ${item.category || ''} ${item.description || ''}`.toLowerCase().includes(activeConcern)) : categoryProducts
   return (
     <>
-      <section className="gt-hero gt-hero-slider">
-        <div className="gt-hero-copy" key={slide}>
-          <div className="gt-eyebrow"><Sparkles size={15} /> {slides[slide].eyebrow}</div>
-          <h1>{slides[slide].title}</h1>
-          <p>{slides[slide].copy}</p>
-          <div className="gt-parlour-location"><MapPin size={22}/><span><b>Visit our parlour</b><small>Bakra Bazar, Jhikargachha, Jashore</small></span></div>
-          <div className="gt-hero-actions"><a className="gt-button gt-button-gold" href="https://www.google.com/maps/search/?api=1&query=Bakra+Bazar+Jhikargachha+Jashore+Bangladesh" target="_blank" rel="noreferrer">Get directions <ArrowRight size={17} /></a><a className="gt-button gt-button-outline" href="tel:01990941408"><Phone size={15}/> Call 01990941408</a></div>
-          <div className="gt-hero-promise"><ShieldCheck size={17} /> Easy ordering <span>·</span> Cash on delivery available</div>
-          <div className="gt-slider-controls" aria-label="Hero slides">{slides.map((item, index) => <button key={item.eyebrow} className={slide === index ? 'active' : ''} onClick={() => setSlide(index)} aria-label={`Show slide ${index + 1}`} />)}</div>
+      <section className="gt-home-showcase" aria-label="Golden Touch featured collections">
+        <Link to="/categories/makeup" className="gt-showcase-card gt-showcase-beauty">
+          {purchasableProducts.find((item) => item.image_url)?.image_url
+            ? <img className="gt-showcase-image" src={purchasableProducts.find((item) => item.image_url).image_url} alt="Beauty and makeup products" />
+            : <div className="gt-showcase-fallback gt-showcase-beauty-fallback"><Sparkles size={42}/><span>GOLDEN TOUCH BEAUTY</span></div>}
+          <span className="gt-showcase-shade"/>
+          <span className="gt-showcase-copy"><small>{tx("BEAUTY · CARE · CONFIDENCE","সৌন্দর্য · যত্ন · আত্মবিশ্বাস")}</small><strong>{tx("Beauty Products","বিউটি পণ্য")}</strong><em>{tx("Explore collection","কালেকশন দেখুন")} <ArrowRight size={16}/></em></span>
+        </Link>
+        <div className="gt-showcase-side">
+          <Link to="/categories/womens-clothing" className="gt-showcase-card gt-showcase-fashion">
+            <img className="gt-showcase-image" src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=1200&q=85" alt="Women's fashion collection" loading="lazy"/>
+            <span className="gt-showcase-shade"/>
+            <span className="gt-showcase-copy"><small>{tx("NEW SEASON · WOMEN’S STYLE","নতুন কালেকশন · নারীদের ফ্যাশন")}</small><strong>{tx("Winter Fashion","শীতের ফ্যাশন")}</strong><em>{tx("Discover styles","পোশাক দেখুন")} <ArrowRight size={16}/></em></span>
+          </Link>
+          <a href="#our-parlour" className="gt-showcase-card gt-showcase-parlour">
+            <img className="gt-showcase-image" src={`${import.meta.env.BASE_URL}golden-touch-parlour.webp`} alt="Golden Touch beauty parlour interior" loading="lazy"/>
+            <span className="gt-showcase-shade"/>
+            <span className="gt-showcase-copy"><small>{tx("BAKRA BAZAR · JHIKARGACHHA, JASHORE","বাকড়া বাজার · ঝিকরগাছা, যশোর")}</small><strong>{tx("Our Parlour","আমাদের পার্লার")}</strong><em>{tx("Call 01990941408","কল করুন ০১৯৯০৯৪১৪০৮")} <Phone size={15}/></em></span>
+          </a>
         </div>
-        {slides[slide].parlour ? <div className="gt-hero-services" id="our-parlour">
-          <div className="gt-eyebrow">OUR PARLOUR SERVICES</div><h2>Our services</h2>
-          <ul><li>Perfectly blended smoky eyes</li><li>Waterproof, long-lasting makeup</li><li>Quality beauty products</li><li>A look suited to your face</li><li>Hair cut, colour & styling</li><li>Manicure, pedicure & nail art</li><li>Waxing, threading & bleach</li><li>Hydra facial, hair treatment & spa</li></ul>
-        </div> : <div className="gt-hero-art" aria-label="Golden Touch beauty collection illustration"><div className="gt-art-glow" /><div className="gt-art-bottle bottle-one"><span>GOLDEN<br />TOUCH</span></div><div className="gt-art-bottle bottle-two"><span>PURE<br />CARE</span></div><div className="gt-art-flower">✿</div><div className="gt-art-caption"><Sparkles size={16} /><span><b>Golden care</b><small>Made for your glow</small></span></div></div>}
       </section>
+      <section className="gt-parlour-contact-strip" id="our-parlour"><MapPin size={17}/><span>{tx("Visit Golden Touch Beauty Solution","গোল্ডেন টাচ বিউটি সলিউশনে চলে আসুন")}: <b>বাকড়া বাজার, ঝিকরগাছা, যশোর</b></span><a href="tel:01990941408">01990941408</a><a href="https://wa.me/8801990941408" target="_blank" rel="noreferrer">WhatsApp</a></section>
       <section className="gt-promise-row"><span><ShieldCheck /> {tx('Carefully selected products','বাছাই করা পণ্য')}</span><span><Truck /> {tx('Delivery available','ডেলিভারি সুবিধা')}</span><span><ShoppingBag /> {tx('Easy guest checkout','অতিথি হিসেবে সহজ অর্ডার')}</span><span><Phone /> {tx('Friendly support','সহযোগিতাপূর্ণ সেবা')}</span></section>
       <section className="gt-category-section" aria-label="Shop by category">
         <div className="gt-category-heading"><div><div className="gt-eyebrow">{tx("FIND YOUR FAVOURITES","আপনার পছন্দ খুঁজুন")}</div><h2>{tx("Shop by category","ক্যাটাগরি অনুযায়ী কিনুন")}</h2></div><a href="#shop">{tx("View collection","সব পণ্য দেখুন")} <ArrowRight size={15} /></a></div>
