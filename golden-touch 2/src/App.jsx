@@ -183,7 +183,7 @@ function Home({ products, loading, addToCart, settings, language }) {
   const [activeConcern, setActiveConcern] = useState('')
   const [slide, setSlide] = useState(0)
   const categories = useMemo(() => ['All', ...GT_CATEGORIES.map((item) => item.name)], [])
-  const purchasableProducts = products.filter((item) => Number(item.price) > 0 && Number(item.stock) > 0 && item.image_url)
+  const purchasableProducts = products.filter((item) => Number(item.price) > 0)
   const slides = [
     { eyebrow: 'GOLDEN TOUCH · LADIES BEAUTY PARLOUR', title: <>Where beauty meets<br /><em>confidence.</em></>, copy: 'Your beauty, our promise. Golden Touch is here for your beauty and care.', parlour: true },
   ]
