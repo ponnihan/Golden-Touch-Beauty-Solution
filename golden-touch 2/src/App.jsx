@@ -783,6 +783,29 @@ const APP_STYLES = `
 @media(prefers-reduced-motion:reduce){.gt-app *{scroll-behavior:auto!important;animation-duration:.01ms!important;transition-duration:.01ms!important}}
 
 
+/* Homepage visual showcase: three responsive image panels, no empty dark column */
+.gt-home-showcase{width:min(1440px,100%);margin:0 auto;padding:26px clamp(16px,4vw,58px) 14px;display:grid;grid-template-columns:minmax(0,1.08fr) minmax(0,.92fr);gap:16px;background:#fff}
+.gt-showcase-side{display:grid;grid-template-rows:1fr 1fr;gap:16px;min-width:0}
+.gt-showcase-card{position:relative;display:block;min-width:0;overflow:hidden;border-radius:18px;background:#f3eee7;isolation:isolate;text-decoration:none;color:#fff;animation:gt-showcase-enter .55s ease both}
+.gt-showcase-beauty{min-height:470px}
+.gt-showcase-side .gt-showcase-card{min-height:227px}
+.gt-showcase-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .75s cubic-bezier(.2,.7,.2,1);z-index:-2}
+.gt-showcase-card:hover .gt-showcase-image{transform:scale(1.045)}
+.gt-showcase-shade{position:absolute;inset:0;background:linear-gradient(180deg,#17110c08 25%,#17110cbb 100%);z-index:-1}
+.gt-showcase-copy{position:absolute;left:clamp(18px,3vw,34px);right:18px;bottom:clamp(18px,3vw,32px);display:flex;flex-direction:column;align-items:flex-start;gap:9px;text-shadow:0 2px 12px #0008}
+.gt-showcase-copy small{font-size:10px;font-weight:700;letter-spacing:.16em}
+.gt-showcase-copy strong{font:500 clamp(25px,3.3vw,43px)/1.08 'Playfair Display',serif}
+.gt-showcase-copy em{display:inline-flex;align-items:center;gap:8px;font:600 12px 'DM Sans';font-style:normal;border-bottom:1px solid #ffffffa8;padding-bottom:5px}
+.gt-showcase-side .gt-showcase-copy{left:22px;bottom:20px;gap:6px}
+.gt-showcase-side .gt-showcase-copy strong{font-size:clamp(23px,2.3vw,31px)}
+.gt-showcase-fallback{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:#98754b;background:radial-gradient(circle at 50% 38%,#fff 0,#f0e4d5 60%,#e5d3bd 100%);font:600 12px 'DM Sans';letter-spacing:.18em}
+.gt-parlour-contact-strip{display:flex;align-items:center;justify-content:center;gap:13px;flex-wrap:wrap;padding:13px 18px;background:#faf7f1;color:#67584b;font-size:11px}
+.gt-parlour-contact-strip svg{color:#a77d48}.gt-parlour-contact-strip a{color:#8c6335;font-weight:700;text-decoration:none}
+@keyframes gt-showcase-enter{from{opacity:.45;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}
+@media(max-width:760px){.gt-home-showcase{grid-template-columns:1fr;padding:14px 12px 8px;gap:10px}.gt-showcase-beauty{min-height:clamp(250px,68vw,390px)}.gt-showcase-side{grid-template-rows:repeat(2,minmax(175px,48vw));gap:10px}.gt-showcase-card{border-radius:13px}.gt-showcase-copy{left:17px;bottom:17px}.gt-showcase-copy strong{font-size:29px}.gt-showcase-side .gt-showcase-copy strong{font-size:25px}.gt-showcase-copy small{font-size:8px}.gt-parlour-contact-strip{justify-content:flex-start;gap:9px;padding:13px 15px;line-height:1.5}}
+@media(prefers-reduced-motion:reduce){.gt-showcase-card{animation:none}.gt-showcase-image{transition:none}}
+
+
 `
 
 export default App
