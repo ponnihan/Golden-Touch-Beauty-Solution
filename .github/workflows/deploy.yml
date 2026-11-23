@@ -46,7 +46,8 @@ jobs:
           set -e
           DIST="golden-touch 2/dist"
           test -f "$DIST/index.html"
-          mkdir -p "$DIST/solutions" "$DIST/categories" "$DIST/journal" "$DIST/product"
+          mkdir -p "$DIST/admin" "$DIST/solutions" "$DIST/categories" "$DIST/journal" "$DIST/product"
+          cp "$DIST/index.html" "$DIST/admin/index.html"
           for route in acne oily-skin dry-skin visible-pores pigmentation sun-damage dullness ageing hair-fall dandruff; do
             mkdir -p "$DIST/solutions/$route"
             cp "$DIST/index.html" "$DIST/solutions/$route/index.html"
