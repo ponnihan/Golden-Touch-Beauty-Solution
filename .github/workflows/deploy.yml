@@ -51,7 +51,7 @@ jobs:
             mkdir -p "$DIST/solutions/$route"
             cp "$DIST/index.html" "$DIST/solutions/$route/index.html"
           done
-          for route in skincare cleanser toner serum moisturizer sunscreen makeup lip-care hair-care body-care face-mist essence; do
+          for route in skincare cleanser toner serum moisturizer sunscreen makeup lip-care hair-care body-care face-mist essence saree three-piece womens-clothing womens-innerwear; do
             mkdir -p "$DIST/categories/$route"
             cp "$DIST/index.html" "$DIST/categories/$route/index.html"
           done
